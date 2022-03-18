@@ -1,0 +1,82 @@
+.btn {
+  display: inline-block;
+
+  color: $white-light;
+  cursor: pointer;
+
+  padding: 8px 24px;
+  background: linear-gradient(224.78deg, #5490E3 8.12%, #1357B3 92.21%);
+
+  border-radius: 4px;
+  border: 0;
+
+  @include typeface-2(p3, desktop);
+
+  transition: .4s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  @include typeface-2(p3, desktop);
+
+  color: $white-light;
+
+  transition: .3s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.input {
+  accent-color: $primary-normal;
+}
+
+input, select, option, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: $black-light;
+
+  border: none;
+  border-radius: 4px;
+  color: $white-light;
+
+  @include typeface-2(p3, desktop);
+}
+
+th {
+  font-family: 'Rubik', sans-serif;
+  color: $white-light;
+
+  @include typeface-2(p3, desktop);
+}
+
+select, option {
+  height: 48px;
+}
+
+.btn-search {
+  width: 56px;
+  height: 48px;
+  cursor: pointer;
+
+  transform: translate3d(-6px, 0, 0);
+
+  background-image: url(../svg/icon-search.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: $black-light;
+
+  border: none;
+  border-radius: 4px;
+}
+
+.myInput[type="checkbox"] {
+  width: 23px;
+  height: 23px;
+}
