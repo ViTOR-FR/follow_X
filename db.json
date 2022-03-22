@@ -11,6 +11,7 @@
       "conteudo": "Mídia Digital",
       "duration": 12,
       "id_produto": "1",
+      "valor_venda": "220",
       "ativo": true
     },
     {
@@ -49,6 +50,7 @@
       "validade": "1 ANO",
       "conteudo": "Mídia Digital",
       "duration": 12,
+      "valor_venda": "220",
       "id_produto": "1",
       "ativo": true
     },
@@ -69,6 +71,19 @@
       "id": 6,
       "id_user": 3,
       "date": "2022-03-12",
+      "imageUrl": "https://nyousefali.com.br/blog/img/06.png",
+      "categoria": "serviço",
+      "produto": "PF A1 - 1 ANO ARQUIVO",
+      "validade": "1 ANO",
+      "conteudo": "Mídia Digital",
+      "duration": 12,
+      "id_produto": "2",
+      "ativo": true
+    },
+    {
+      "id": 27,
+      "id_user": 3,
+      "date": "2022-01-13",
       "imageUrl": "https://nyousefali.com.br/blog/img/06.png",
       "categoria": "serviço",
       "produto": "PF A1 - 1 ANO ARQUIVO",

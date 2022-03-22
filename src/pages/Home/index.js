@@ -18,14 +18,26 @@ const Home = () => {
     const [indProduto, setIndProduto] = useState([]);
 
     useEffect(() => {
-        api.get('/pedido');
+
+        // Requisição para Quantidade Total de Emissoes
+        api.get('/pedido?id_produto=1&id_produto=2&id_produto=13&id_produto=15&id_produto=12')
+        .then((response) => {
+            setIndEmissao(response.data.length);
+            console.log(indEmissao);
+        })
+
+        api.get('/pedido?_like=valor_venda')
+        .then((response) => {
+            setIndVenda(response.data);
+            console.log(indVenda);
+        })
     }, []);
 
     return(
         <>
             <section className="container">
                 <div className="row">
-                    <IndicadorEmissao />
+                    <IndicadorEmissao key={api.id_produto} content={indEmissao} />
                     <IndicadorVenda />
                     <IndicadorFaturamento />
                     <IndicadorProduto />
