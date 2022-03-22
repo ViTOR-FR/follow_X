@@ -6,7 +6,7 @@ const Header = () => {
             <header className="px-2 py-1">
                 <nav>
                     <div className="logo">
-                        <a href=""> <img src={logo} alt="followX_logo" /> </a>
+                        <a href="/"> <img src={logo} alt="followX_logo" /> </a>
                     </div>
                     <ul className="menu">
                         <li><a href="">Página Inicial</a></li>

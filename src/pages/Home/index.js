@@ -3,6 +3,9 @@ import IndicadorVenda from "./Main/IndicadorVendas/indicadorVenda";
 import IndicadorFaturamento from "./Main/IndicadorFaturamento/indicadorFaturamento";
 import IndicadorProduto from "./Main/IndicadorProdutos/indicadorProduto";
 
+import Header from "pages/Header";
+import Footer from "pages/Footer";
+
 //API
 import api from 'services/api';
 
@@ -23,26 +26,28 @@ const Home = () => {
         api.get('/pedido?id_produto=1&id_produto=2&id_produto=13&id_produto=15&id_produto=12')
         .then((response) => {
             setIndEmissao(response.data.length);
-            console.log(indEmissao);
         })
 
-        api.get('/pedido?_like=valor_venda')
+        // Requisicao valor de venda
+        api.get('/pedido?valor_venda=220')
         .then((response) => {
             setIndVenda(response.data);
-            console.log(indVenda);
         })
+
     }, []);
 
     return(
         <>
+            <Header />
             <section className="container">
                 <div className="row">
                     <IndicadorEmissao key={api.id_produto} content={indEmissao} />
-                    <IndicadorVenda />
+                    <IndicadorVenda content={indVenda} />
                     <IndicadorFaturamento />
                     <IndicadorProduto />
                 </div>
             </section>
+            <Footer />
         </>
     );
 }
