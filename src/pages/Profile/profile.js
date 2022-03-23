@@ -9,14 +9,15 @@ import api from 'services/api';
 import profile_image from '../../img/09.png';
 
 
-const Profile = ( ) => {
+const Profile = () => {
 
     const [userName, setUserName] = useState([]);
 
     useEffect(() => {
-        api.get('/user?_sort=user')
+
+        api.get("/user?_sort=user")
         .then((response) => {
-            setUserName(response.data.name)
+            setUserName(response.data);
         });
 
     }, []);
@@ -29,9 +30,13 @@ const Profile = ( ) => {
                     <div className="grid-6">
                         <div className="flex-start-row">
                             <div className="profile-big">
-                                <img className={profile_image} src="profile/vitor.jpeg" alt="" />
+                                <img className="profile-img" src={profile_image} alt="" />
                             </div>
-                            <ShowUserName key={api.token} content={userName} />
+                            {
+                                userName.map((item) => {
+                                    return <ShowUserName key={item.id} content={item} />
+                                })
+                            }
                         </div>
                     </div>
                     <div className="grid-6 flex-center">
