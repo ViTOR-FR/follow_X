@@ -3,12 +3,14 @@ import instagramLogo from 'svg/icon-instagram.svg';
 import youtubeLogo from 'svg/icon-youtube.svg';
 import twitterLogo from 'svg/icon-twitter.svg';
 
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
     return(
         <>
             <div className="row">
                 <div className="grid-9">
-                    <p>2022 | Todos os direitos reservados. Desenvolvido por <a href="https://www.cwvdigital.com.br/" target="_blank">CWV Digital Soluções LTDA.</a> </p>
+                    <p>2022 | Todos os direitos reservados. Desenvolvido por <Link to="https://www.cwvdigital.com.br/" target="_blank">CWV Digital Soluções LTDA.</Link> </p>
                 </div>
 
                 <div className="grid-3">

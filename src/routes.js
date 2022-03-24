@@ -19,7 +19,6 @@ const Paths = () => {
                     <Route path="/pesquisa" element={<Search />} />
                     <Route path="/contato" element={<Contact />} />
 
-
                     <Route path="*" element={<NotFound />} />
                 </Routes> 
             </BrowserRouter>

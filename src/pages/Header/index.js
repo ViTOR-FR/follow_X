@@ -1,21 +1,24 @@
 import logo from 'svg/followX_logo2.svg'
 
+//LINK
+import { Link } from 'react-router-dom';
+
 const Header = () => {
     return(
         <>
             <header className="px-2 py-1">
                 <nav>
                     <div className="logo">
-                        <a href="/"> <img src={logo} alt="followX_logo" /> </a>
+                        <Link to="/"> <img src={logo} alt="followX_logo" /></Link>
                     </div>
                     <ul className="menu">
-                        <li><a href="">Página Inicial</a></li>
-                        <li><a href="">Agenda</a></li>
-                        <li><a href="">Estoque</a></li>
-                        <li><a href="">Faturamento</a></li>
-                        <li><a href="">Fiscal</a></li>
-                        <li><a href="">Financeiro</a></li>
-                        <li><a href="">Sistema</a></li>
+                        <li><Link to="/">Página Inicial</Link></li>
+                        <li><Link to="/agendamento">Agenda</Link></li>
+                        <li><Link to="/estoque">Estoque</Link></li>
+                        <li><Link to="/faturamento">Faturamento</Link></li>
+                        <li><Link to="/fiscal">Fiscal</Link></li>
+                        <li><Link to="/financeiro">Financeiro</Link></li>
+                        <li><Link to="/configuracoes">Sistema</Link></li>
                     </ul>
                 </nav>
 
@@ -30,10 +33,10 @@ const Header = () => {
                     </div>
 
                     <div className="cta-desktop ml-3" >
-                        <a href="#" className="btn">Login</a>
+                        <Link to="" className="btn">Login</Link>
                     </div>
                     <div className="cta-mobile">
-                        <a href="#" className="link color-primary">Login</a>
+                        <Link to="#" className="link color-primary">Login</Link>
                     </div>
                 </div>
             </header>
@@ -43,13 +46,13 @@ const Header = () => {
             <div className="relative">
                 <div className="menu-mobile">
                     <ul className="nav-mobile">
-                        <li><a href="#" className="link-menu-mobile">Página Inicial</a></li>
-                        <li><a href="#" className="link-menu-mobile">Agenda</a></li>
-                        <li><a href="#" className="link-menu-mobile">Estoque</a></li>
-                        <li><a href="#" className="link-menu-mobile">Faturamento</a></li>
-                        <li><a href="#" className="link-menu-mobile">Fiscal</a></li>
-                        <li><a href="#" className="link-menu-mobile">Financeiro</a></li>
-                        <li><a href="#" className="link-menu-mobile">Sistema</a></li>
+                        <li><Link to="/" className="link-menu-mobile">Página Inicial</Link></li>
+                        <li><Link to="/agendamento" className="link-menu-mobile">Agenda</Link></li>
+                        <li><Link to="/estoque" className="link-menu-mobile">Estoque</Link></li>
+                        <li><Link to="/faturamento" className="link-menu-mobile">Faturamento</Link></li>
+                        <li><Link to="/fiscal" className="link-menu-mobile">Fiscal</Link></li>
+                        <li><Link to="/financeiro" className="link-menu-mobile">Financeiro</Link></li>
+                        <li><Link to="/configuracoes" className="link-menu-mobile">Sistema</Link></li>
 
                         <li className="py-2 px-2">
                             <form className="flex">

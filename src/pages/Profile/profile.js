@@ -13,11 +13,15 @@ const Profile = () => {
 
     const [userName, setUserName] = useState([]);
 
+    userName.forEach((userName, index) => {
+        index += userName
+    })
+
     useEffect(() => {
 
-        api.get("/user?_sort=user")
+        api.get("/user/")
         .then((response) => {
-            setUserName(response.data);
+            setUserName(response.data)
         });
 
     }, []);
@@ -32,12 +36,8 @@ const Profile = () => {
                             <div className="profile-big">
                                 <img className="profile-img" src={profile_image} alt="" />
                             </div>
-                            {
-                                userName.map((item) => {
-                                    return <ShowUserName key={item.id} content={item} />
-                                })
-                            }
                         </div>
+                        <ShowUserName content={userName[0]} />
                     </div>
                     <div className="grid-6 flex-center">
                         <a href="#" className="btn">Meus Dados</a>

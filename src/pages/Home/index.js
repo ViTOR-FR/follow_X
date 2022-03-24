@@ -12,6 +12,9 @@ import api from 'services/api';
 //HOOKS
 import { useState, useEffect } from 'react';
 
+//LINK
+import { Link } from "react-router-dom";
+
 const Home = () => {
 
     //Variáveis de Estado
