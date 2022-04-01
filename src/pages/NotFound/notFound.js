@@ -5,6 +5,9 @@ import Footer from "pages/Footer";
 //LINK
 import { Link } from "react-router-dom";
 
+// IMAGES
+import logo from "../../svg/followX_logo.svg";
+
 
 const NotFound = () => {
     return(
@@ -12,7 +15,7 @@ const NotFound = () => {
             <section className="container">
                 <div className="row flex-center-column">
                     <div className="grid-4">
-                        <img src="/svg/followX_logo.svg" alt="follow_x_logo" />
+                        <img src={logo} alt="follow_x_logo" />
                         <div className="error-desc flex-center-column">
                             <h1 className="h0 color-primary">404</h1>
                             <h6>Página não encontrada!</h6>

@@ -8,6 +8,9 @@ import Profile from "pages/Profile/profile";
 import Search from "pages/Search/search";
 import Contact from "pages/Contato/contact";
 
+import { Link } from "react-router-dom";
+import Pedidos from "pages/Pedidos/pedidos";
+
 const Paths = () => {
     return (
         <>
@@ -18,6 +21,9 @@ const Paths = () => {
                     <Route path="/perfil" element={<Profile />} />
                     <Route path="/pesquisa" element={<Search />} />
                     <Route path="/contato" element={<Contact />} />
+
+                    <Route path="/faturamento/pedidos" element={<Pedidos />} />
+
 
                     <Route path="*" element={<NotFound />} />
                 </Routes> 

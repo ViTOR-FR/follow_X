@@ -425,6 +425,10 @@ span {
           flex-direction: column;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .flex-space {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -446,6 +450,12 @@ span {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.justify-center {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .relative {
@@ -723,6 +733,33 @@ span {
   padding: 8px 20px;
   border: 1px solid #FFCE52;
   border-radius: 4px;
+}
+
+.border-left {
+  border-right: 1px solid #1B69D2;
+}
+
+.request-table {
+  width: 95%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  padding: 0px 15px;
+  margin: 0 30px 40px 30px;
+}
+
+.request-table .table-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .s-0 {
@@ -2115,6 +2152,23 @@ nav {
           transform: translate(0, -4px, 0);
 }
 
+.icon-m {
+  max-width: 48px;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+@media screen and (max-width: 960px) {
+  .icon-m {
+    max-width: 32px;
+  }
+}
+
+.icon-m:hover {
+  -webkit-transform: translate(0, -4px, 0);
+          transform: translate(0, -4px, 0);
+}
+
 .icon-l {
   max-width: 120px;
   -webkit-transition: .5s ease;
@@ -2191,9 +2245,11 @@ input, select, option, textarea {
   font-weight: 200;
 }
 
-th {
+table {
   font-family: 'Rubik', sans-serif;
   color: #F7F9FC;
+  border: 1px solid #1B69D2;
+  border-radius: 5px;
   font-family: 'Rubik', sans-serif;
   font-size: 16px;
   line-height: 26px;
@@ -2214,6 +2270,20 @@ select, option {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #151B26;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-search-1 {
+  width: 50px;
+  height: 43px;
+  cursor: pointer;
+  -webkit-transform: translate3d(-12px, 0, 0);
+          transform: translate3d(-12px, 0, 0);
+  background-image: url(../svg/search_white.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background: linear-gradient(224.78deg, #5490E3 8.12%, #1357B3 92.21%);
   border: none;
   border-radius: 4px;
 }

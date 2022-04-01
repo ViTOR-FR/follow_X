@@ -4,7 +4,7 @@
 
 
 @mixin typeface-1($size, $device: desktop) {
-
+  
   @if $size == h0 and $device == desktop {
     font-family: 'Rubik', sans-serif;
     font-size: 120px;

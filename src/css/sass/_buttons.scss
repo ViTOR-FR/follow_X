@@ -49,9 +49,12 @@ input, select, option, textarea {
   @include typeface-2(p3, desktop);
 }
 
-th {
+table {
   font-family: 'Rubik', sans-serif;
   color: $white-light;
+
+  border: 1px solid $primary-normal;
+  border-radius: 5px;
 
   @include typeface-2(p3, desktop);
 }
@@ -71,6 +74,22 @@ select, option {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: $black-light;
+
+  border: none;
+  border-radius: 4px;
+}
+
+.btn-search-1 {
+  width: 50px;
+  height: 43px;
+  cursor: pointer;
+
+  transform: translate3d(-12px, 0, 0);
+
+  background-image: url(../svg/search_white.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background: linear-gradient(224.78deg, #5490E3 8.12%, #1357B3 92.21%);
 
   border: none;
   border-radius: 4px;
