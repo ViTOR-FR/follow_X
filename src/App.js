@@ -5,6 +5,7 @@ import Footer from 'pages/Footer'
 import Paths from 'routes';
 
 function App() {
+
   return (
     <>
       <Paths />
