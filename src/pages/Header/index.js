@@ -9,16 +9,62 @@ const Header = () => {
             <header className="px-2 py-1">
                 <nav>
                     <div className="logo">
-                        <Link to="/"> <img src={logo} alt="followX_logo" /></Link>
+                        <Link to="/inicio"> <img src={logo} alt="followX_logo" /></Link>
                     </div>
-                    <ul className="menu">
-                        <li><Link to="/">Página Inicial</Link></li>
-                        <li><Link to="/agendamento">Agenda</Link></li>
-                        <li><Link to="/estoque">Estoque</Link></li>
-                        <li><Link to="/faturamento">Faturamento</Link></li>
-                        <li><Link to="/fiscal">Fiscal</Link></li>
-                        <li><Link to="/financeiro">Financeiro</Link></li>
-                        <li><Link to="/configuracoes">Sistema</Link></li>
+
+                    <ul className="menu  flex-center">
+                        <li><Link to="/inicio">Página Inicial</Link></li>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Agenda</button>
+                            <div className="dropdown-content">
+                                <Link to="#">Agendamentos</Link>
+                                <Link to="#">Horário de Funcionamento</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Estoque</button>
+                            <div className="dropdown-content">
+                                <Link to="#">Produtos</Link>
+                                <Link to="#">Movimentação de Estoque</Link>
+                                <Link to="#">Gerenciamento de Estoque</Link>
+                            </div>
+                        </div>
+                        
+                        <div className="dropdown">
+                            <button className="dropbtn">Faturamento</button>
+                            <div className="dropdown-content">
+                                <Link to="/faturamento/pedidos/CriarPedido">Realizar Pedido</Link>
+                                <Link to="/faturamento/pedidos">Pedidos</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Fiscal</button>
+                            <div className="dropdown-content">
+                                <Link to="#">Emitir NF-e</Link>
+                                <Link to="#">Notas</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Financeiro</button>
+                            <div className="dropdown-content">
+                                <Link to="#">Contas a Receber</Link>
+                                <Link to="#">Contas a Pagar</Link>
+                                <Link to="#">Acerto de Saldo</Link>
+                                <Link to="#">Formas de Pagamento</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Sistema</button>
+                            <div className="dropdown-content">
+                                <Link to="#">Parâmetros do Sistema</Link>
+                                <Link to="#">Alterar Senha</Link>
+                            </div>
+                        </div>
                     </ul>
                 </nav>
 

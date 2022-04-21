@@ -26,10 +26,18 @@ const Pedidos = () => {
     }
 
     const data = {
-        clientes: [],
-        vendedores: [],
-        contabilidade: [],
-        unidade: [],
+        id: [1, 2, 3, 4],
+        dataCriacao: ["19/04/2022", "19/04/2022", "19/04/2022", "20/04/2022"],
+        vendedor: ["VITOR", "WILLAN", "CRISTIANE", "GUILHERME"],
+        contabilidade: ["LGR CONTABILIDADE"],
+        unidade: ["IT - SETOR MARISTA"],
+        cliente: ["FERNANDA (111.111.111-12)", "CRISTIANE (111.111.111-12)", "DIEGO (111.111.111-12)", "JULIO (111.111.111-12)"],
+        produto: ["PJ - A1", "PF - A1", "BIRD ID", "PJ - A3"],
+        valorVenda: ["220,00", "160,00", "59,90", "520,00"],
+        gerarNota: ["Nota", "Gerada", "Nota", "Gerar Nota"],
+        situacao: ["Aguardando", "Aprovado", "Aguardando", "Recusado"],
+        gerarPIX: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
+        icons: [1, 2, 3, 4]
     }
 
     return(
@@ -54,7 +62,7 @@ const Pedidos = () => {
                                 <input list="vendedores" id="filter_vendedor" name="filter_vendedor" type="text" placeholder="Vendedor" onChange={handleChangeValues} />
 
                                 <datalist id="vendedores">
-                                    {data.vendedores.map((vendedores, index) => {
+                                    {data.vendedor.map((vendedores, index) => {
                                         return <option key={index} value={vendedores} />
                                     })}
                                 </datalist>
@@ -74,7 +82,7 @@ const Pedidos = () => {
                                 <input list="clientes" id="filter_cliente" name="filter_cliente" type="text" placeholder="Cliente" onChange={handleChangeValues} />
 
                                 <datalist id="clientes">
-                                    {data.clientes.map((clientes, index) => {
+                                    {data.cliente.map((clientes, index) => {
                                         return <option key={index} value={clientes} />
                                     })}
                                 </datalist>
@@ -95,7 +103,7 @@ const Pedidos = () => {
             
                                 <datalist id="contabilidade">
                                     {data.contabilidade.map((contabilidades, index) => {
-                                        return<option key={index} value={contabilidades} />
+                                        return <option key={index} value={contabilidades} />
                                     })}
                                 </datalist>
                             </div>
@@ -137,7 +145,7 @@ const Pedidos = () => {
                 </div>
             </section>
 
-            <TabelaPedido />
+            <TabelaPedido key={data.id} content={data} />
         </>
     );
 }

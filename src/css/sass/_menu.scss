@@ -235,3 +235,47 @@ nav {
     background-color: $white-light;
   }
 }
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: $white-light;
+  padding: 14px 16px;
+  background-color: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(6, 9, 15, 0.9);
+  border: 1px solid $primary-normal;
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: $primary-normal;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  z-index: 1;
+}
+
+.dropdown-content a:hover {
+  background-color: $black-light;
+  border-radius: 9px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
