@@ -51,7 +51,7 @@ const Header = () => {
                         <div className="dropdown">
                             <button className="dropbtn">Financeiro</button>
                             <div className="dropdown-content">
-                                <Link to="#">Contas a Receber</Link>
+                                <Link to="/financeiro/contasAReceber">Contas a Receber</Link>
                                 <Link to="#">Contas a Pagar</Link>
                                 <Link to="#">Acerto de Saldo</Link>
                                 <Link to="#">Formas de Pagamento</Link>

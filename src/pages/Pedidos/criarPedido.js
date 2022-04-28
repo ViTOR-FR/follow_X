@@ -4,10 +4,13 @@ import Footer from "pages/Footer";
 
 //HOOKS
 import { useState, useEffect } from "react";
+import  CurrencyInput from 'react-currency-input-field';
+import { Link } from "react-router-dom";
 
 //SVG
 import request_icon from "../../svg/request.svg";
 import items_icon from "../../svg/items.svg";
+import pay_icon from "../../svg/pay_icon.svg"
 
 const CriarPedido = (  ) => {
 
@@ -35,7 +38,7 @@ const CriarPedido = (  ) => {
         valorVenda: ["220,00", "160,00", "59,90", "520,00"],
         gerarNota: ["Nota", "Gerada", "Nota", "Gerar Nota"],
         situacao: ["Aguardando", "Aprovado", "Aguardando", "Recusado"],
-        gerarPIX: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
+        formaPagamento: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
         tipoPessoa: ["Física", "Jurídica"],
         icons: [1, 2, 3, 4]
     }
@@ -201,14 +204,14 @@ const CriarPedido = (  ) => {
                     </div>
 
                     <div className="grid-12 flex line-bottom">
-                        <h3>Itens do Pedido</h3>    
+                        <h3>ITENS DO PEDIDO</h3>    
                         <img className="icon-m ml-3" src={items_icon} alt="realizar_pedido" />
                     </div>
 
                     <div className="row">
                         <div className="grid-3">
                             <h6 className="ml-2 mb-2">ID Pedido</h6>
-                            <input className="ml-2" list="produtoDe_venda" id="produto_venda" name="produto_venda" type="text" placeholder="Responsável pelo Pedido" onChange={handleChangeValues} />
+                            <input className="ml-2" list="produtoDe_venda" id="produto_venda" name="produto_venda" type="text" placeholder="Produto/Serviço" onChange={handleChangeValues} />
 
                             <datalist id="produtoDe_venda">
                                 {data.produto.map((vendedor, index) => {
@@ -224,7 +227,118 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor Unitário</h6>
-                            <input className="ml-2 text-center" id="valor_unitario" name="valor_unitario" type="number" onChange={handleChangeValues} />
+                            <CurrencyInput 
+                                className="ml-2 text-center"
+                                maxlength="12"
+                                prefix="R$ "
+                                decimalSeparator=","
+                                groupSeparator="."
+                                id="valor_unitario" 
+                                name="valor_unitario" 
+                                placeholder = "Valor da Und" 
+                                defaultValue = { "" } 
+                                decimalsLimit = { 2 } 
+                                onChange={handleChangeValues} 
+                            />
+                        </div>
+
+                        <div className="grid-2">
+                            <h6 className="ml-3 mb-2">Valor Delivery</h6>
+                            <CurrencyInput 
+                                className="ml-2 text-center"
+                                maxlength="12"
+                                prefix="R$ "
+                                decimalSeparator=","
+                                groupSeparator="."
+                                id="valor_delivery" 
+                                name="valor_delivery" 
+                                placeholder = "Taxa de Visita" 
+                                defaultValue = { "" } 
+                                decimalsLimit = { 2 } 
+                                onChange={handleChangeValues} 
+                            />
+                        </div>
+
+                        <div className="grid-2">
+                            <h6 className="ml-3 mb-2">Valor Desconto</h6>
+                            <CurrencyInput 
+                                className="ml-2 text-center"
+                                maxlength="12"
+                                prefix="R$ "
+                                decimalSeparator=","
+                                groupSeparator="."
+                                id = "valor_a_pagar" 
+                                name = "valor_a_pagar" 
+                                placeholder = "Total a Pagar" 
+                                defaultValue = { "" } 
+                                decimalsLimit = { 2 } 
+                                onChange={handleChangeValues} 
+                            />
+                        </div>
+
+                        <div className="grid-2">
+                            <h6 className="ml-3 mb-2">Valor Total</h6>
+                            <CurrencyInput 
+                                className="ml-2 text-center"
+                                maxlength="12"
+                                prefix="R$ "
+                                decimalSeparator=","
+                                groupSeparator="."
+                                id = "valor_a_pagar" 
+                                name = "valor_a_pagar" 
+                                placeholder = "Total a Pagar" 
+                                defaultValue = { "" } 
+                                decimalsLimit = { 2 } 
+                                onChange={handleChangeValues} 
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid-12 flex line-bottom">
+                        <h3>PAGAMENTO</h3>    
+                        <img className="icon-m ml-3" src={pay_icon} alt="realizar_pedido" />
+                    </div>
+
+                    <div className="row">
+                        <div className="grid-3">
+                            <h6 className="ml-2 mb-2">Forma de Pagamento</h6>
+                            <input className="ml-2" list="formaDe_pagamento" id="forma_pagamento" name="forma_pagamento" type="text" placeholder="Ex.: Dinheiro" onChange={handleChangeValues} />
+
+                            <datalist id="formaDe_pagamento">
+                                {data.formaPagamento.map((formaPagamento, index) => {
+                                    return <option key={index} value={formaPagamento} />
+                                })}
+                            </datalist>
+                        </div>
+
+                        <div className="grid-2">
+                            <h6 className="ml-3 mb-2">Data de Vencimento</h6>
+                            <input className="ml-2 text-center" id="valor_desconto" name="valor_desconto" type="date" onChange={handleChangeValues} />
+                        </div>
+
+                        <div className="grid-2">
+                            <h6 className="ml-3 mb-2">Valor</h6>
+                            <CurrencyInput 
+                                className="ml-2 text-center"
+                                maxlength="12"
+                                intlConfig={{ locale: 'pt-br', currency: 'BRL' }}
+                                prefix="R$ "
+                                decimalSeparator=","
+                                groupSeparator="."
+                                id = "valor_a_pagar" 
+                                name = "valor_a_pagar" 
+                                placeholder = "Total a Pagar" 
+                                defaultValue = { "" } 
+                                decimalsLimit = { 2 } 
+                                onChange={handleChangeValues} 
+                            />
+                        </div>
+                    </div>
+
+                    <div className="row flex-end-row">
+                        <div className="cta-desktop ml-3" >
+                            <Link to="/faturamento/pedidos" className="btn">Salvar</Link>
+                            <Link to="/faturamento/pedidos" className="btn-cancel ml-3">Cancelar</Link>
                         </div>
                     </div>
                 </div>

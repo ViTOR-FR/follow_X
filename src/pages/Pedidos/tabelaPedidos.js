@@ -94,7 +94,7 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">PIX</h6>
                             {
-                                content.gerarPIX.map((element, index) => {
+                                content.formaPagamento.map((element, index) => {
                                     return <p key={index} className="line-bottom mb-2">{element}</p>
                                 })
                             }

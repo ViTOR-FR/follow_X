@@ -36,7 +36,7 @@ const Pedidos = () => {
         valorVenda: ["220,00", "160,00", "59,90", "520,00"],
         gerarNota: ["Nota", "Gerada", "Nota", "Gerar Nota"],
         situacao: ["Aguardando", "Aprovado", "Aguardando", "Recusado"],
-        gerarPIX: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
+        formaPagamento: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
         icons: [1, 2, 3, 4]
     }
 
