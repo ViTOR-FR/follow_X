@@ -4,7 +4,6 @@ import Footer from "pages/Footer";
 import ShowUserName from "./showUser";
 
 import { useEffect, useState } from "react";
-import api from 'services/api';
 
 import profile_image from '../../img/09.png';
 
@@ -12,19 +11,6 @@ import profile_image from '../../img/09.png';
 const Profile = () => {
 
     const [userName, setUserName] = useState([]);
-
-    userName.forEach((userName, index) => {
-        index += userName
-    })
-
-    useEffect(() => {
-
-        api.get("/user/")
-        .then((response) => {
-            setUserName(response.data)
-        });
-
-    }, []);
 
     return(
         <>

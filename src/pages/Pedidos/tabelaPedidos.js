@@ -5,9 +5,6 @@ import Icons from "./Icons/iconsComponent";
 //LINKS
 import { Link } from "react-router-dom";
 
-//API
-import api from "services/api";
-
 //Hooks
 import { useEffect, useState } from "react";
 import { isContentEditable } from "@testing-library/user-event/dist/utils";

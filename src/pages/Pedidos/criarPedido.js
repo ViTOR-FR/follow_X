@@ -2,6 +2,9 @@
 import Header from "pages/Header";
 import Footer from "pages/Footer";
 
+//API
+import Axios from "axios";
+
 //HOOKS
 import { useState, useEffect } from "react";
 import  CurrencyInput from 'react-currency-input-field';
@@ -24,23 +27,29 @@ const CriarPedido = (  ) => {
     };
 
     const handleClick = () => {
-        console.log("Click")
-    }
+        Axios.post("http://35.239.209.9:3306/criarPedido", {
+            data_criacao: values.data_lancamento_inicio,
+            vendedor_pedido: values.filter_vendedor,
+            tipo_pessoa: values.tipo_pessoa,
+            cpf: values.num_cnpjCpf,
+            cnpj: values.num_cnpjCpf,
+            indicacao_contabilidade: values.filter_indicacao,
+            vip: values.videoconferencia_sim,
+            cd_publico: values.orgaoPublico_sim,
+            pedido_terceiro: values.faturar_pedido_terceiro,
+            permitir_importacao_unidade: values.permitir_importar_pedido_unidade,
+            validacao_VC: values.validacaoVC_sim,
+            observacao: values.story,
+            produto: values.produto_venda,
+            quantidade: values.item_quantidade,
+            vlr_unitario: values.valor_unitario,
+            vlr_delivery: values.valor_delivery,
+            vlr_desconto: values.valor_desconto,
+            vlr_total_pedido: values.valor_a_pagar,
 
-    const data = {
-        id: [1, 2, 3, 4],
-        dataCriacao: ["19/04/2022", "19/04/2022", "19/04/2022", "20/04/2022"],
-        vendedor: ["VITOR", "WILLAN", "CRISTIANE", "GUILHERME"],
-        contabilidade: ["LGR CONTABILIDADE"],
-        unidade: ["IT - SETOR MARISTA"],
-        cliente: ["FERNANDA (111.111.111-12)", "CRISTIANE (111.111.111-12)", "DIEGO (111.111.111-12)", "JULIO (111.111.111-12)"],
-        produto: ["PJ - A1", "PF - A1", "BIRD ID", "PJ - A3"],
-        valorVenda: ["220,00", "160,00", "59,90", "520,00"],
-        gerarNota: ["Nota", "Gerada", "Nota", "Gerar Nota"],
-        situacao: ["Aguardando", "Aprovado", "Aguardando", "Recusado"],
-        formaPagamento: ["PIX", "PAGO", "CARTÃO DE CRÉDITO", "DINHEIRO"],
-        tipoPessoa: ["Física", "Jurídica"],
-        icons: [1, 2, 3, 4]
+        }).then((response) => {
+            console.log(response);
+        });
     }
 
     return(
@@ -73,9 +82,7 @@ const CriarPedido = (  ) => {
                             <input className="ml-2" list="vendedores" id="filter_vendedor" name="filter_vendedor" type="text" placeholder="Responsável pelo Pedido" onChange={handleChangeValues} />
 
                             <datalist id="vendedores">
-                                {data.vendedor.map((vendedor, index) => {
-                                    return <option key={index} value={vendedor} />
-                                })}
+                                
                             </datalist>
                         </div>
                     </div>
@@ -89,9 +96,7 @@ const CriarPedido = (  ) => {
                             <input className="ml-2" list="tipo_pessoa" id="filter_pessoa" name="tipo_pessoa" type="text" placeholder="Física/Jurídica" onChange={handleChangeValues} required />
 
                             <datalist id="tipo_pessoa">
-                                {data.tipoPessoa.map((tipoPessoa, index) => {
-                                    return <option key={index} value={tipoPessoa} />
-                                })}
+                                
                             </datalist>
                         </div>
 
@@ -113,9 +118,7 @@ const CriarPedido = (  ) => {
                             <input className="ml-2" list="indicacao" id="filter_indicacao" name="filter_indicacao" type="text" placeholder="Parceiro que Inidicou" onChange={handleChangeValues} />
 
                             <datalist id="indicacao">
-                                {data.contabilidade.map((contabilidade, index) => {
-                                    return <option key={index} value={contabilidade} />
-                                })}
+                                
                             </datalist>
                         </div>
                     </div>
@@ -123,28 +126,28 @@ const CriarPedido = (  ) => {
                     <div className="row">
                         <div className="checkbox-container ml-2">
                             <div className="radio-flex mt-3">
-                                <label for="ativo"><h6>VIP:</h6></label>
+                                <label htmlFor="ativo"><h6>VIP:</h6></label>
 
-                                <input className="myInput ml-2" type="radio" name="videoconferencia-sim" id="videoconferencia-sim"/>
-                                <label className="mr-9" for="videoconferencia-sim"><h6>Sim</h6></label>
+                                <input className="myInput ml-2" type="radio" name="videoconferencia_sim" id="videoconferencia_sim"/>
+                                <label className="mr-9" htmlFor="videoconferencia-sim"><h6>Sim</h6></label>
 
-                                <input className="myInput ml-2" type="radio" name="videoconferencia-nao" id="videoconferencia-nao"/>
-                                <label for="videoconferencia-nao"><h6>Não</h6></label>
+                                <input className="myInput ml-2" type="radio" name="videoconferencia_nao" id="videoconferencia_nao"/>
+                                <label htmlFor="videoconferencia-nao"><h6>Não</h6></label>
                             </div>
                         </div>
                     </div>
 
                     <div className="row flex-start-row">
                         <div className="grid-3">
-                            <label for="ativo"><h6>Condomínio, Associação, Instância pública, Cartório, S/A ou equivalente?:</h6></label>
+                            <label htmlFor="ativo"><h6>Condomínio, Associação, Instância pública, Cartório, S/A ou equivalente?:</h6></label>
                         </div>
                         <div className="checkbox-container">
                             <div className="radio-flex mt-3">
-                                <input className="myInput ml-2" type="radio" name="orgaoPublico-sim" id="orgaoPublico-sim"/>
-                                <label className="mr-9" for="orgaoPublico-sim"><h6>Sim</h6></label>
+                                <input className="myInput ml-2" type="radio" name="orgaoPublico_sim" id="orgaoPublico-sim"/>
+                                <label className="mr-9" htmlFor="orgaoPublico-sim"><h6>Sim</h6></label>
 
-                                <input className="myInput ml-2" type="radio" name="orgaoPublico-nao" id="orgaoPublico-nao"/>
-                                <label for="orgaoPublico-nao"><h6>Não</h6></label>
+                                <input className="myInput ml-2" type="radio" name="orgaoPublico_nao" id="orgaoPublico-nao"/>
+                                <label htmlFor="orgaoPublico-nao"><h6>Não</h6></label>
                             </div>
                         </div>
                     </div>
@@ -156,16 +159,6 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input className="myInput ml-2" type="checkbox" name="faturar_pedido_terceiro" id="faturar_pedido_terceiro" onChange={handleChangeValues} />
-                        </div>
-                    </div>
-
-                    <div className="row flex-start-row">
-                        <div className="grid-3">
-                            <label htmlFor="permitir_importar_pedido_unidade"><h6>Permitir importar pedido em outra unidade:</h6></label>
-                        </div>
-
-                        <div className="grid-3">
-                            <input className="myInput ml-2" type="checkbox" name="permitir_importar_pedido_unidade" id="permitir_importar_pedido_unidade" onChange={handleChangeValues} />
                         </div>
                     </div>
 
@@ -210,13 +203,11 @@ const CriarPedido = (  ) => {
 
                     <div className="row">
                         <div className="grid-3">
-                            <h6 className="ml-2 mb-2">ID Pedido</h6>
+                            <h6 className="ml-2 mb-2">Produto</h6>
                             <input className="ml-2" list="produtoDe_venda" id="produto_venda" name="produto_venda" type="text" placeholder="Produto/Serviço" onChange={handleChangeValues} />
 
                             <datalist id="produtoDe_venda">
-                                {data.produto.map((vendedor, index) => {
-                                    return <option key={index} value={vendedor} />
-                                })}
+                                
                             </datalist>
                         </div>
 
@@ -229,7 +220,7 @@ const CriarPedido = (  ) => {
                             <h6 className="ml-3 mb-2">Valor Unitário</h6>
                             <CurrencyInput 
                                 className="ml-2 text-center"
-                                maxlength="12"
+                                maxLength="12"
                                 prefix="R$ "
                                 decimalSeparator=","
                                 groupSeparator="."
@@ -246,7 +237,7 @@ const CriarPedido = (  ) => {
                             <h6 className="ml-3 mb-2">Valor Delivery</h6>
                             <CurrencyInput 
                                 className="ml-2 text-center"
-                                maxlength="12"
+                                maxLength="12"
                                 prefix="R$ "
                                 decimalSeparator=","
                                 groupSeparator="."
@@ -263,12 +254,12 @@ const CriarPedido = (  ) => {
                             <h6 className="ml-3 mb-2">Valor Desconto</h6>
                             <CurrencyInput 
                                 className="ml-2 text-center"
-                                maxlength="12"
+                                maxLength="12"
                                 prefix="R$ "
                                 decimalSeparator=","
                                 groupSeparator="."
-                                id = "valor_a_pagar" 
-                                name = "valor_a_pagar" 
+                                id = "valor_desconto" 
+                                name = "valor_desconto" 
                                 placeholder = "Total a Pagar" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
@@ -280,7 +271,7 @@ const CriarPedido = (  ) => {
                             <h6 className="ml-3 mb-2">Valor Total</h6>
                             <CurrencyInput 
                                 className="ml-2 text-center"
-                                maxlength="12"
+                                maxLength="12"
                                 prefix="R$ "
                                 decimalSeparator=","
                                 groupSeparator="."
@@ -305,9 +296,7 @@ const CriarPedido = (  ) => {
                             <input className="ml-2" list="formaDe_pagamento" id="forma_pagamento" name="forma_pagamento" type="text" placeholder="Ex.: Dinheiro" onChange={handleChangeValues} />
 
                             <datalist id="formaDe_pagamento">
-                                {data.formaPagamento.map((formaPagamento, index) => {
-                                    return <option key={index} value={formaPagamento} />
-                                })}
+                                
                             </datalist>
                         </div>
 
@@ -320,7 +309,7 @@ const CriarPedido = (  ) => {
                             <h6 className="ml-3 mb-2">Valor</h6>
                             <CurrencyInput 
                                 className="ml-2 text-center"
-                                maxlength="12"
+                                maxLength="12"
                                 intlConfig={{ locale: 'pt-br', currency: 'BRL' }}
                                 prefix="R$ "
                                 decimalSeparator=","
@@ -337,7 +326,7 @@ const CriarPedido = (  ) => {
 
                     <div className="row flex-end-row">
                         <div className="cta-desktop ml-3" >
-                            <Link to="/faturamento/pedidos" className="btn">Salvar</Link>
+                            <Link to="#" className="btn" onClick={handleClick}>Salvar</Link>
                             <Link to="/faturamento/pedidos" className="btn-cancel ml-3">Cancelar</Link>
                         </div>
                     </div>
