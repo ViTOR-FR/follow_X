@@ -9,11 +9,12 @@ import Search from "pages/Search/search";
 import Contact from "pages/Contato/contact";
 import CriarPedido from "pages/Pedidos/criarPedido";
 import ContasAReceber from "pages/ContasAReceber/contasAReceber";
-
-import { Link } from "react-router-dom";
 import Pedidos from "pages/Pedidos/pedidos";
 
 const Paths = () => {
+
+    const ip = "35.239.209.9";
+
     return (
         <>
             <BrowserRouter>

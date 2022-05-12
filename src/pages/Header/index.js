@@ -35,7 +35,7 @@ const Header = () => {
                         <div className="dropdown">
                             <button className="dropbtn">Faturamento</button>
                             <div className="dropdown-content">
-                                <Link to="/faturamento/pedidos/CriarPedido">Realizar Pedido</Link>
+                                <Link to="/faturamento/pedidos/criarPedido">Realizar Pedido</Link>
                                 <Link to="/faturamento/pedidos">Pedidos</Link>
                             </div>
                         </div>

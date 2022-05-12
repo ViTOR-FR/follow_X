@@ -17,38 +17,50 @@ import pay_icon from "../../svg/pay_icon.svg"
 
 const CriarPedido = (  ) => {
 
-    const [values, setValues] = useState();
+    const [dataLancamento, setDataLancamento] = useState([]);
+    const [vendedorPedido, setVendedorPedido] = useState([]);
+    const [tipoPessoa, setTipoPessoa] = useState([]);
+    const [numCPFCNPJ, setNumCPFCNPJ] = useState([]);
+    const [indicacao, setIndicacao] = useState("SEM INDICAÇÃO");
+    const [vipSim, setVip] = useState(false);
+    const [condSim, setCond] = useState(false);
+    const [pedidoTerceiro, setPedidoTerceiro] = useState(false);
+    const [pedidoUnidade, setPedidoUnidade] = useState(false);
+    const [vcSim, setVC] = useState(false);
+    const [observacao, setObservacao] = useState(false);
+    const [produto, setProduto] = useState();
+    const [quantidadeProduto, setQuantidadeProduto] = useState(0);
+    const [valorUnitario, setValorUnitario] = useState(0.00);
+    const [valorDelivery, setValorDelivery] = useState(0.00);
+    const [valorDesconto, setValorDesconto] = useState(0.00);
+    const [valorTotal, setValorTotal] = useState(0.00);
+    const [formaPagamento, setFormaPagamento] = useState();
+    const [dataVencimento, setDataVencimento] = useState();
 
-    const handleChangeValues = (values) => {
-        setValues((prevValue) => ({
-            ...prevValue,
-            [values.target.name]: values.target.value,
-        }))
-    };
-
-    const handleClick = () => {
-        Axios.post("http://35.239.209.9:3306/criarPedido", {
-            data_criacao: values.data_lancamento_inicio,
-            vendedor_pedido: values.filter_vendedor,
-            tipo_pessoa: values.tipo_pessoa,
-            cpf: values.num_cnpjCpf,
-            cnpj: values.num_cnpjCpf,
-            indicacao_contabilidade: values.filter_indicacao,
-            vip: values.videoconferencia_sim,
-            cd_publico: values.orgaoPublico_sim,
-            pedido_terceiro: values.faturar_pedido_terceiro,
-            permitir_importacao_unidade: values.permitir_importar_pedido_unidade,
-            validacao_VC: values.validacaoVC_sim,
-            observacao: values.story,
-            produto: values.produto_venda,
-            quantidade: values.item_quantidade,
-            vlr_unitario: values.valor_unitario,
-            vlr_delivery: values.valor_delivery,
-            vlr_desconto: values.valor_desconto,
-            vlr_total_pedido: values.valor_a_pagar,
-
-        }).then((response) => {
-            console.log(response);
+    
+    const salvarPedido = () => {
+        Axios.post("http://34.121.243.219:3306/", {
+            dataLancamento: dataLancamento,
+            vendedorPedido: vendedorPedido,
+            tipoPessoa: tipoPessoa,
+            numCPFCNPJ: numCPFCNPJ,
+            indicacao: indicacao,
+            vipSim: vipSim,
+            condSim: condSim,
+            pedidoTerceiro: pedidoTerceiro,
+            pedidoUnidade: pedidoUnidade,
+            vcSim: vcSim,
+            observacao: observacao,
+            produto: produto,
+            quantidadeProduto: quantidadeProduto,
+            valorUnitario: valorUnitario,
+            valorDelivery: valorDelivery,
+            valorDesconto: valorDesconto,
+            valorTotal: valorTotal,
+            formaPagamento: formaPagamento,
+            dataVencimento: dataVencimento
+        }).then(() => {
+            alert("Inserção efetuada com sucesso ")
         });
     }
 
@@ -69,17 +81,35 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-2">
-                            <input className="ml-2 text-center" id="data_lançamento_inicio" name="data_lançamento_inicio" type="date" onChange={handleChangeValues} disabled />
+                            <input 
+                            className="ml-2 text-center" 
+                            id="data_lançamento_inicio" 
+                            name="data_lançamento_inicio" 
+                            type="date" 
+                            onChange={(e) => {
+                                setDataLancamento(e.target.value)
+                            }} 
+                            disabled />
                         </div>
                     </div>
 
                     <div className="row flex-start-row">
                         <div className="grid-1 flex-center">
-                            <label htmlFor="filter_vendedor"><h6>Vendedor: </h6></label>
+                            <label htmlFor="vendedor_pedido"><h6>Vendedor: </h6></label>
                         </div>
 
                         <div className="grid-3">
-                            <input className="ml-2" list="vendedores" id="filter_vendedor" name="filter_vendedor" type="text" placeholder="Responsável pelo Pedido" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2" 
+                            list="vendedores" 
+                            id="vendedor_pedido" 
+                            name="vendedor_pedido" 
+                            type="text" 
+                            placeholder="Responsável pelo Pedido" 
+                            onChange={(e) => {
+                                setVendedorPedido(e.target.value)
+                            }} 
+                            />
 
                             <datalist id="vendedores">
                                 
@@ -93,7 +123,17 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3">
-                            <input className="ml-2" list="tipo_pessoa" id="filter_pessoa" name="tipo_pessoa" type="text" placeholder="Física/Jurídica" onChange={handleChangeValues} required />
+                            <input 
+                            className="ml-2" 
+                            list="tipo_pessoa" 
+                            id="filter_pessoa" 
+                            name="tipo_pessoa" 
+                            type="text" 
+                            placeholder="Física/Jurídica" 
+                            onChange={(e) => {
+                                setTipoPessoa(e.target.value)
+                            }} 
+                            required />
 
                             <datalist id="tipo_pessoa">
                                 
@@ -105,7 +145,15 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3">
-                            <input className="ml-2" id="num_cnpjCpf" name="num_cnpjCpf" type="text" onChange={handleChangeValues} required />
+                            <input 
+                            className="ml-2" 
+                            id="num_cnpjCpf" 
+                            name="num_cnpjCpf" 
+                            type="text" 
+                            onChange={(e) => {
+                                setNumCPFCNPJ(e.target.value)
+                            }} 
+                            required />
                         </div>
                     </div>
 
@@ -115,7 +163,17 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3">
-                            <input className="ml-2" list="indicacao" id="filter_indicacao" name="filter_indicacao" type="text" placeholder="Parceiro que Inidicou" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2" 
+                            list="indicacao" 
+                            id="indicacao_contabilidade" 
+                            name="indicacao_contabilidade" 
+                            type="text" 
+                            placeholder="Parceiro que Inidicou" 
+                            onChange={(e) => {
+                                setIndicacao(e.target.value)
+                            }} 
+                            />
 
                             <datalist id="indicacao">
                                 
@@ -123,32 +181,41 @@ const CriarPedido = (  ) => {
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="checkbox-container ml-2">
-                            <div className="radio-flex mt-3">
-                                <label htmlFor="ativo"><h6>VIP:</h6></label>
+                    <div className="row flex-start-row">
+                        <div className="grid-3">
+                            <label htmlFor="validacaoVC_sim"><h6>Atendimento Delivery:</h6></label>
+                        </div>
 
-                                <input className="myInput ml-2" type="radio" name="videoconferencia_sim" id="videoconferencia_sim"/>
-                                <label className="mr-9" htmlFor="videoconferencia-sim"><h6>Sim</h6></label>
-
-                                <input className="myInput ml-2" type="radio" name="videoconferencia_nao" id="videoconferencia_nao"/>
-                                <label htmlFor="videoconferencia-nao"><h6>Não</h6></label>
-                            </div>
+                        <div className="grid-3 flex">
+                            <input 
+                            className="myInput ml-2" 
+                            type="checkbox" 
+                            name="delivery" 
+                            id="delivery"
+                            value={true}
+                            onChange={(e) => {
+                                setVip(e.target.value)
+                            }}
+                            />
                         </div>
                     </div>
 
                     <div className="row flex-start-row">
                         <div className="grid-3">
-                            <label htmlFor="ativo"><h6>Condomínio, Associação, Instância pública, Cartório, S/A ou equivalente?:</h6></label>
+                            <label htmlFor="cond_ass_it_cartorio"><h6>Condomínio, Associação, Instância pública, Cartório, S/A ou equivalente:</h6></label>
                         </div>
-                        <div className="checkbox-container">
-                            <div className="radio-flex mt-3">
-                                <input className="myInput ml-2" type="radio" name="orgaoPublico_sim" id="orgaoPublico-sim"/>
-                                <label className="mr-9" htmlFor="orgaoPublico-sim"><h6>Sim</h6></label>
 
-                                <input className="myInput ml-2" type="radio" name="orgaoPublico_nao" id="orgaoPublico-nao"/>
-                                <label htmlFor="orgaoPublico-nao"><h6>Não</h6></label>
-                            </div>
+                        <div className="grid-3 flex">
+                            <input 
+                            className="myInput ml-2" 
+                            type="checkbox" 
+                            name="cond_ass_it_cartorio" 
+                            id="cond_ass_it_cartorio"
+                            value={true}
+                            onChange={(e) => {
+                                setCond(e.target.value)
+                            }}
+                            />
                         </div>
                     </div>
 
@@ -158,7 +225,15 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3">
-                            <input className="myInput ml-2" type="checkbox" name="faturar_pedido_terceiro" id="faturar_pedido_terceiro" onChange={handleChangeValues} />
+                            <input 
+                            className="myInput ml-2" 
+                            type="checkbox" 
+                            name="faturar_pedido_terceiro" 
+                            id="faturar_pedido_terceiro"
+                            value={true}
+                            onChange={(e) => {
+                                setPedidoTerceiro(e.target.value)
+                            }} />
                         </div>
                     </div>
 
@@ -168,7 +243,16 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3">
-                            <input className="myInput ml-2" type="checkbox" name="permitir_importar_pedido_unidade" id="permitir_importar_pedido_unidade" onChange={handleChangeValues} />
+                            <input 
+                            className="myInput ml-2" 
+                            type="checkbox" 
+                            name="permitir_importar_pedido_unidade" 
+                            id="permitir_importar_pedido_unidade" 
+                            value={true}
+                            onChange={(e) => {
+                                setPedidoUnidade(e.target.value)
+                            }}
+                            />
                         </div>
                     </div>
 
@@ -178,11 +262,17 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-3 flex">
-                            <input className="myInput ml-2" type="checkbox" name="validacaoVC_sim" id="validacaoVC_sim" onChange={handleChangeValues} />
-                            <label className="ml-2" htmlFor="validacaoVC_sim"><h6>Sim</h6></label>
+                            <input 
+                            className="myInput ml-2" 
+                            type="checkbox" 
+                            name="validacaoVC" 
+                            id="validacaoVC" 
+                            value={true}
+                            onChange={(e) => {
+                                setVC(e.target.value)
+                            }}
+                            />
 
-                            <input className="myInput ml-6" type="checkbox" name="validacaoVC_nao" id="validacaoVC_nao" onChange={handleChangeValues} />
-                            <label className="ml-2" htmlFor="validacaoVC_nao"><h6>Não</h6></label>
                         </div>
                     </div>
 
@@ -192,7 +282,16 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-6">
-                            <textarea className="ml-2" id="story" name="story" rows="5" cols="32"></textarea>
+                            <textarea 
+                            className="ml-2" 
+                            id="story" 
+                            name="story" 
+                            rows="5" 
+                            cols="32" 
+                            onChange={(e) => {
+                                setObservacao(e.target.value)
+                            }}
+                            />
                         </div>
                     </div>
 
@@ -204,7 +303,16 @@ const CriarPedido = (  ) => {
                     <div className="row">
                         <div className="grid-3">
                             <h6 className="ml-2 mb-2">Produto</h6>
-                            <input className="ml-2" list="produtoDe_venda" id="produto_venda" name="produto_venda" type="text" placeholder="Produto/Serviço" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2" 
+                            list="produtoDe_venda" 
+                            id="produto_venda" 
+                            name="produto_venda" 
+                            type="text" 
+                            placeholder="Produto/Serviço" 
+                            onChange={(e) => {
+                                setProduto(e.target.value);
+                            }} />
 
                             <datalist id="produtoDe_venda">
                                 
@@ -213,7 +321,14 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-1">
                             <h6 className="ml-1 mb-2">Quantidade</h6>
-                            <input className="ml-2 text-center" id="item_quantidade" name="item_quantidade" type="number" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2 text-center" 
+                            id="item_quantidade" 
+                            name="item_quantidade" 
+                            type="number" 
+                            onChange={(e) => {
+                                setQuantidadeProduto(e.target.value);
+                            }} />
                         </div>
 
                         <div className="grid-2">
@@ -229,7 +344,9 @@ const CriarPedido = (  ) => {
                                 placeholder = "Valor da Und" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
-                                onChange={handleChangeValues} 
+                                onChange={(e) => {
+                                    setValorUnitario(e.target.value);
+                                }} 
                             />
                         </div>
 
@@ -246,7 +363,9 @@ const CriarPedido = (  ) => {
                                 placeholder = "Taxa de Visita" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
-                                onChange={handleChangeValues} 
+                                onChange={(e) => {
+                                    setValorDelivery(e.target.value);
+                                }}
                             />
                         </div>
 
@@ -263,7 +382,9 @@ const CriarPedido = (  ) => {
                                 placeholder = "Total a Pagar" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
-                                onChange={handleChangeValues} 
+                                onChange={(e) => {
+                                    setValorDesconto(e.target.value);
+                                }}
                             />
                         </div>
 
@@ -280,7 +401,9 @@ const CriarPedido = (  ) => {
                                 placeholder = "Total a Pagar" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
-                                onChange={handleChangeValues} 
+                                onChange={(e) => {
+                                    setValorTotal(e.target.value);
+                                }} 
                             />
                         </div>
                     </div>
@@ -293,7 +416,17 @@ const CriarPedido = (  ) => {
                     <div className="row">
                         <div className="grid-3">
                             <h6 className="ml-2 mb-2">Forma de Pagamento</h6>
-                            <input className="ml-2" list="formaDe_pagamento" id="forma_pagamento" name="forma_pagamento" type="text" placeholder="Ex.: Dinheiro" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2" 
+                            list="formaDe_pagamento" 
+                            id="forma_pagamento" 
+                            name="forma_pagamento" 
+                            type="text" 
+                            placeholder="Ex.: Dinheiro" 
+                            onChange={(e) => {
+                                setFormaPagamento(e.target.value);
+                            }}
+                            />
 
                             <datalist id="formaDe_pagamento">
                                 
@@ -302,7 +435,15 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Data de Vencimento</h6>
-                            <input className="ml-2 text-center" id="valor_desconto" name="valor_desconto" type="date" onChange={handleChangeValues} />
+                            <input 
+                            className="ml-2 text-center" 
+                            id="data_vencimento" 
+                            name="data_vencimento" 
+                            type="date" 
+                            onChange={(e) => {
+                                setDataVencimento(e.target.value);
+                            }}
+                            />
                         </div>
 
                         <div className="grid-2">
@@ -319,14 +460,16 @@ const CriarPedido = (  ) => {
                                 placeholder = "Total a Pagar" 
                                 defaultValue = { "" } 
                                 decimalsLimit = { 2 } 
-                                onChange={handleChangeValues} 
+                                onChange={(e) => {
+                                    setValorTotal(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
 
                     <div className="row flex-end-row">
                         <div className="cta-desktop ml-3" >
-                            <Link to="#" className="btn" onClick={handleClick}>Salvar</Link>
+                            <Link to="#" className="btn" onClick={salvarPedido}>Salvar</Link>
                             <Link to="/faturamento/pedidos" className="btn-cancel ml-3">Cancelar</Link>
                         </div>
                     </div>
