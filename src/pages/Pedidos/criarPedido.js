@@ -18,32 +18,32 @@ import pay_icon from "../../svg/pay_icon.svg"
 const CriarPedido = (  ) => {
 
     const [dataLancamento, setDataLancamento] = useState([]);
-    const [vendedorPedido, setVendedorPedido] = useState([]);
-    const [tipoPessoa, setTipoPessoa] = useState([]);
-    const [numCPFCNPJ, setNumCPFCNPJ] = useState([]);
+    const [vendedorPedido, setVendedorPedido] = useState("");
+    const [tipoPessoa, setTipoPessoa] = useState("");
+    const [numCPF, setNumCNPJ] = useState(0);
+    const [numCNPJ, setNumCPF] = useState(0);
     const [indicacao, setIndicacao] = useState("SEM INDICAÇÃO");
-    const [vipSim, setVip] = useState(false);
+    const [vipSim, setVip] = useState(1);
     const [condSim, setCond] = useState(false);
-    const [pedidoTerceiro, setPedidoTerceiro] = useState(false);
-    const [pedidoUnidade, setPedidoUnidade] = useState(false);
-    const [vcSim, setVC] = useState(false);
-    const [observacao, setObservacao] = useState(false);
+    const [pedidoTerceiro, setPedidoTerceiro] = useState(1);
+    const [pedidoUnidade, setPedidoUnidade] = useState(1);
+    const [vcSim, setVC] = useState(1);
+    const [observacao, setObservacao] = useState(1);
     const [produto, setProduto] = useState();
     const [quantidadeProduto, setQuantidadeProduto] = useState(0);
     const [valorUnitario, setValorUnitario] = useState(0.00);
     const [valorDelivery, setValorDelivery] = useState(0.00);
     const [valorDesconto, setValorDesconto] = useState(0.00);
     const [valorTotal, setValorTotal] = useState(0.00);
-    const [formaPagamento, setFormaPagamento] = useState();
-    const [dataVencimento, setDataVencimento] = useState();
-
+    const [formaPagamento, setFormaPagamento] = useState("");
+    const [dataVencimento, setDataVencimento] = useState([]);
     
     const salvarPedido = () => {
-        Axios.post("http://34.121.243.219:3306/", {
-            dataLancamento: dataLancamento,
+        Axios.post("http://localhost:3306/api/insert", {
             vendedorPedido: vendedorPedido,
             tipoPessoa: tipoPessoa,
-            numCPFCNPJ: numCPFCNPJ,
+            numCPF: numCPF,
+            numCNPJ: numCNPJ,
             indicacao: indicacao,
             vipSim: vipSim,
             condSim: condSim,
@@ -57,10 +57,9 @@ const CriarPedido = (  ) => {
             valorDelivery: valorDelivery,
             valorDesconto: valorDesconto,
             valorTotal: valorTotal,
-            formaPagamento: formaPagamento,
-            dataVencimento: dataVencimento
-        }).then(() => {
-            alert("Inserção efetuada com sucesso ")
+            formaPagamento: formaPagamento
+        }).then((response) => {
+            console.log(response)
         });
     }
 
@@ -119,7 +118,7 @@ const CriarPedido = (  ) => {
 
                     <div className="row flex-start-row">
                         <div className="grid-1">
-                            <label htmlFor="tipo_pessoa"><h6>Pessoa:</h6></label>
+                            <label htmlFor="tipo_pessoa"><h6>Tipo de Certificado:</h6></label>
                         </div>
 
                         <div className="grid-3">
@@ -141,17 +140,33 @@ const CriarPedido = (  ) => {
                         </div>
 
                         <div className="grid-1 ml-5">
-                            <label htmlFor="tipo_pessoa"><h6>CPF/CNPJ: </h6></label>
+                            <label htmlFor="pessoa_fisica"><h6>CPF: </h6></label>
                         </div>
 
                         <div className="grid-3">
                             <input 
                             className="ml-2" 
-                            id="num_cnpjCpf" 
-                            name="num_cnpjCpf" 
+                            id="num_cpf" 
+                            name="num_cpf" 
                             type="text" 
                             onChange={(e) => {
-                                setNumCPFCNPJ(e.target.value)
+                                setNumCPF(e.target.value)
+                            }} 
+                            required />
+                        </div>
+
+                        <div className="grid-1 ml-5">
+                            <label htmlFor="pessoa_juridica"><h6>CNPJ: </h6></label>
+                        </div>
+
+                        <div className="grid-3">
+                            <input 
+                            className="ml-2" 
+                            id="num_cnpj" 
+                            name="pessoa_juridica" 
+                            type="text" 
+                            onChange={(e) => {
+                                setNumCNPJ(e.target.value)
                             }} 
                             required />
                         </div>
@@ -192,7 +207,7 @@ const CriarPedido = (  ) => {
                             type="checkbox" 
                             name="delivery" 
                             id="delivery"
-                            value={true}
+                            value={0}
                             onChange={(e) => {
                                 setVip(e.target.value)
                             }}
@@ -211,7 +226,7 @@ const CriarPedido = (  ) => {
                             type="checkbox" 
                             name="cond_ass_it_cartorio" 
                             id="cond_ass_it_cartorio"
-                            value={true}
+                            value={0}
                             onChange={(e) => {
                                 setCond(e.target.value)
                             }}
@@ -230,7 +245,7 @@ const CriarPedido = (  ) => {
                             type="checkbox" 
                             name="faturar_pedido_terceiro" 
                             id="faturar_pedido_terceiro"
-                            value={true}
+                            value={0}
                             onChange={(e) => {
                                 setPedidoTerceiro(e.target.value)
                             }} />
@@ -248,7 +263,7 @@ const CriarPedido = (  ) => {
                             type="checkbox" 
                             name="permitir_importar_pedido_unidade" 
                             id="permitir_importar_pedido_unidade" 
-                            value={true}
+                            value={0}
                             onChange={(e) => {
                                 setPedidoUnidade(e.target.value)
                             }}
@@ -267,7 +282,7 @@ const CriarPedido = (  ) => {
                             type="checkbox" 
                             name="validacaoVC" 
                             id="validacaoVC" 
-                            value={true}
+                            value={0}
                             onChange={(e) => {
                                 setVC(e.target.value)
                             }}

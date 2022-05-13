@@ -8,6 +8,7 @@ const port = 3306;
 const ip = "34.121.243.219";
 
 app.use(cors());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 const db = mysql.createPool({
@@ -17,47 +18,44 @@ const db = mysql.createPool({
     database: 'followX'
 });
 
+// const users = [
+//     {name: 'Jones', email: 'jones@gmail.com'},
+//     {name: 'Henrique', email: 'henrique@hotmail.com'}
+//   ]
 
-app.get("/", (req, res) => {
 
-    let query1 = "INSERT INTO pedidos (id_pedido) VALUES (3)"; 
+// app.get('/users', (req, res) => {
+//     res.json(users)
+// })
 
-    db.query(query1, (err, result) => {
-        console.log(err);
-    });
+app.post("/api/insert", (req, res) => {
 
-    res.send('oi');
-})
+    const {vendedorPedido} = req.body;
+    const {tipoPessoa} = req.body;
+    const {numCPF} = req.body;
+    const {numCNPJ} = req.body;
+    const {indicacao} = req.body;
+    const {vipSim} = req.body;
+    const {condSim} = req.body;
+    const {pedidoTerceiro} = req.body;
+    const {pedidoUnidade} = req.body;
+    const {vcSim} = req.body;
+    const {observacao} = req.body;
+    const {produto} = req.body;
+    const {quantidadeProduto} = req.body;
+    const {valorUnitario} = req.body;
+    const {valorDelivery} = req.body;
+    const {valorDesconto} = req.body;
+    const {valorTotal} = req.body;
+    const {formaPagamento} = req.body;
 
-app.post("/", (req, res) => {
-
-    const dataLancamento = req.body.dataLancamento;
-    const vendedorPedido = req.body.vendedorPedido;
-    const tipoPessoa = req.body.tipoPessoa;
-    const numCPFCNPJ = req.body.numCPFCNPJ;
-    const indicacao = req.body.indicacao;
-    const vipSim = req.body.vipSim;
-    const condSim = req.body.condSim;
-    const pedidoTerceiro = req.body.pedidoTerceiro;
-    const pedidoUnidade = req.body.pedidoUnidade;
-    const vcSim = req.body.vcSim;
-    const observacao = req.body.observacao;
-    const produto = req.body.produto;
-    const quantidadeProduto = req.body.quantidadeProduto;
-    const valorUnitario = req.body.valorUnitario;
-    const valorDelivery = req.body.valorDelivery;
-    const valorDesconto = req.body.valorDesconto;
-    const valorTotal = req.body.valorTotal;
-    const formaPagamento = req.body.formaPagamento;
-    const dataVencimento = req.body.dataVencimento;
-
-    let sqlInsert = "INSERT INTO pedidos (data_criacao, vendedor_pedido, tipo_pessoa, cpf, cnpj, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let sqlInsert = "INSERT INTO pedidos (vendedor_pedido, tipo_pessoa, cpf, cnpj, indicacao_contabilidade, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, forma_pagamento, quantidade_produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     db.query(sqlInsert, [
-        dataLancamento,
         vendedorPedido,
         tipoPessoa,
-        numCPFCNPJ,
+        numCPF,
+        numCNPJ,
         indicacao,
         vipSim,
         condSim,
@@ -66,18 +64,17 @@ app.post("/", (req, res) => {
         vcSim,
         observacao,
         produto,
+        formaPagamento,
         quantidadeProduto,
         valorUnitario,
         valorDelivery,
         valorDesconto,
-        valorTotal,
-        formaPagamento,
-        dataVencimento
+        valorTotal
     ], (err, result) => {
         console.log(err);  
     });
 });
 
-app.listen(port, ip,() => {
+app.listen(port, () => {
     console.log(`Running on ${port}`);
 });
