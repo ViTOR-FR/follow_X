@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const mysql = require('mysql');
+// const bcrypt = require('bcrypt');
+// const saltRounds = 10;
 
 const port = 3306;
 const ip = "34.121.243.219";
@@ -27,6 +29,68 @@ const db = mysql.createPool({
 // app.get('/users', (req, res) => {
 //     res.json(users)
 // })
+
+// ------------------------------- CADASTRO DE USUÁRIOS ---------------------------------------------- //
+
+app.post("/registro", (req, res) => {
+
+    const {usuarioCadastro} = req.body;
+    const {senhaCadastro} = req.body;
+
+    db.query("SELECT * FROM usuarios WHERE login = ? AND senha = ?", [usuarioCadastro, senhaCadastro], (err, response) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(response.length == 0) {
+            db.query("INSERT INTO usuarios (login, senha) VALUES (?, ?)", [usuarioCadastro, senhaCadastro], (err, result) => {
+                if(err) {
+                    res.send(err);
+                }
+
+                res.send({mensagem: "Cadastrado com Sucesso!"});
+            });
+
+        } else {
+            res.send({mensagem: "Usuário já cadastrado"});
+        };
+    })
+});
+
+
+// ------------------------------------------------------------------------------------ //
+
+
+// ------------------------------- LOGIN ---------------------------------------------- //
+
+app.post("/login", (req, res) => {
+
+    const {user} = req.body;
+    const {senha} = req.body;
+
+    db.query("SELECT * FROM usuarios WHERE login = ? AND senha = ?", [user, senha], (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result.length > 0) {
+            if(result) {
+                res.send({mensagem: `Usuário Logado com Sucesso! Bem vindo, ${user}`});
+            } else {
+                res.send()
+            }
+
+        } else {
+            res.send({mensagem: "Conta não encontrada"});
+        }
+    });
+});
+
+// [user, senha],
+
+// ------------------------------------------------------------------------------------ //
+
+// ---------------------------- PEDIDOS ---------------------------------------------- //
 
 app.post("/api/insert", (req, res) => {
 
@@ -75,6 +139,23 @@ app.post("/api/insert", (req, res) => {
     });
 });
 
+// ------------------------------------------------------------------------------------ //
+
+
 app.listen(port, () => {
     console.log(`Running on ${port}`);
 });
+
+
+/*
+
+Para Encriptar a senha:
+
+bcrypt.hash(senhaCadastro, saltRounds, (err, hash) => {});
+
+
+Para verificar senha criptografada
+
+bcrypt.compare(senhaCadastro, result[0].senha, (err, result) => {});
+
+*/

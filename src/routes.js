@@ -19,7 +19,7 @@ const Paths = () => {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route exact path="/" element={<Login />} />
                     <Route path="/inicio" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/perfil" element={<Profile />} />

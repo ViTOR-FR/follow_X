@@ -3,11 +3,11 @@ import logo from 'svg/followX_logo2.svg'
 //LINK
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ( { hideMenu } ) => {
     return(
         <>
             <header className="px-2 py-1">
-                <nav>
+                {!hideMenu && <nav>
                     <div className="logo">
                         <Link to="/inicio"> <img src={logo} alt="followX_logo" /></Link>
                     </div>
@@ -66,11 +66,11 @@ const Header = () => {
                             </div>
                         </div>
                     </ul>
-                </nav>
+                </nav>}
 
                 <div className="bx"></div>
 
-                <div className="flex-start-row">
+                {!hideMenu && <div className="flex-start-row">
                     <div className="search">
                         <form className="flex">
                             <input type="text" name="search" placeholder="Pesquisa..."/>
@@ -84,12 +84,12 @@ const Header = () => {
                     <div className="cta-mobile">
                         <Link to="/login" className="link color-primary">Login</Link>
                     </div>
-                </div>
+                </div>}
             </header>
 
             {/* MENU MOBILE */}
 
-            <div className="relative">
+            {!hideMenu && <div className="relative">
                 <div className="menu-mobile">
                     <ul className="nav-mobile">
                         <li><Link to="/" className="link-menu-mobile">Página Inicial</Link></li>
@@ -108,7 +108,7 @@ const Header = () => {
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div>}
         </>
     );
 }

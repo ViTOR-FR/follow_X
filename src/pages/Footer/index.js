@@ -6,7 +6,7 @@ import twitterLogo from 'svg/icon-twitter.svg';
 const Footer = () => {
     return(
         <>
-            <div className="row">
+            <div className="row footer-custom">
                 <div className="grid-9">
                     <p>2022 | Todos os direitos reservados. Desenvolvido por <a href="https://www.cwvdigital.com.br" target="_blank">CWV Digital Soluções LTDA.</a> </p>
                 </div>

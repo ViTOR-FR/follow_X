@@ -68,3 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Para construção de erros
+
+```jsx
+<div className="menssage">
+    <div className="menssage-success mt-2">
+        <p className="color-white">Login efetuado com sucesso!</p>
+    </div>
+
+    <div className="menssage-error mt-2">
+        <p className="color-white">Usuário ou senha incorretos.</p>
+    </div>
+
+    <div className="menssage-warning mt-2">
+        <p className="color-white">Sua senha não é alterada há 10 dias.</p>
+    </div>
+</div>
+```
