@@ -20,11 +20,11 @@ const CriarPedido = (  ) => {
     const [dataLancamento, setDataLancamento] = useState([]);
     const [vendedorPedido, setVendedorPedido] = useState("");
     const [tipoPessoa, setTipoPessoa] = useState("");
-    const [numCPF, setNumCNPJ] = useState(0);
-    const [numCNPJ, setNumCPF] = useState(0);
+    const [numCNPJ, setNumCNPJ] = useState(0);
+    const [numCPF, setNumCPF] = useState(0);
     const [indicacao, setIndicacao] = useState("SEM INDICAÇÃO");
     const [vipSim, setVip] = useState(1);
-    const [condSim, setCond] = useState(false);
+    const [condSim, setCond] = useState(1);
     const [pedidoTerceiro, setPedidoTerceiro] = useState(1);
     const [pedidoUnidade, setPedidoUnidade] = useState(1);
     const [vcSim, setVC] = useState(1);
@@ -484,7 +484,9 @@ const CriarPedido = (  ) => {
 
                     <div className="row flex-end-row">
                         <div className="cta-desktop ml-3" >
-                            <Link to="#" className="btn" onClick={salvarPedido}>Salvar</Link>
+                            <Link to="/faturamento/pedidos" className="btn" onClick={salvarPedido}>
+                                Salvar
+                            </Link>
                             <Link to="/faturamento/pedidos" className="btn-cancel ml-3">Cancelar</Link>
                         </div>
                     </div>

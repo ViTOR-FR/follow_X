@@ -13,26 +13,28 @@ import Pedidos from "pages/Pedidos/pedidos";
 
 const Paths = () => {
 
+    const logado = localStorage.getItem('@user');
+
     const ip = "35.239.209.9";
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<Login />} />
-                    <Route path="/inicio" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/perfil" element={<Profile />} />
-                    <Route path="/pesquisa" element={<Search />} />
-                    <Route path="/contato" element={<Contact />} />
+                    {!logado && <Route exact path="/" element={<Login />} />}
+                    {logado && <Route path="/" element={<Home />} />}
+                    {!logado && <Route path="/login" element={<Login />} />}
+                    {logado && <Route path="/perfil" element={<Profile />} />}
+                    {logado && <Route path="/pesquisa" element={<Search />} />}
+                    {logado && <Route path="/contato" element={<Contact />} />}
 
-                    <Route path="/faturamento/pedidos" element={<Pedidos />} />
-                    <Route path="/faturamento/pedidos/criarPedido" element={<CriarPedido />} />
+                    {logado && <Route path="/faturamento/pedidos" element={<Pedidos />} />}
+                    {logado && <Route path="/faturamento/pedidos/criarPedido" element={<CriarPedido />} />}
 
-                    <Route path="/financeiro/contasAReceber" element={<ContasAReceber />} />
+                    {logado && <Route path="/financeiro/contasAReceber" element={<ContasAReceber />} />}
 
 
-                    <Route path="*" element={<NotFound />} />
+                    {!logado && <Route path="*" element={<NotFound />} />}
                 </Routes> 
             </BrowserRouter>
         </>

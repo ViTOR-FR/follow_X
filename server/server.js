@@ -75,7 +75,7 @@ app.post("/login", (req, res) => {
 
         if(result.length > 0) {
             if(result) {
-                res.send({mensagem: `Usuário Logado com Sucesso! Bem vindo, ${user}`});
+                res.send({mensagem: "Usuário Logado com Sucesso"});
             } else {
                 res.send()
             }

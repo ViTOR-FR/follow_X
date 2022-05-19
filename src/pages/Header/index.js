@@ -74,7 +74,7 @@ const Header = ( { hideMenu } ) => {
                     <div className="search">
                         <form className="flex">
                             <input type="text" name="search" placeholder="Pesquisa..."/>
-                            <button className="btn-search"></button>
+                            <button className="btn-search">Sair</button>
                         </form>
                     </div>
 
@@ -82,7 +82,7 @@ const Header = ( { hideMenu } ) => {
                         <Link to="/login" className="btn">Login</Link>
                     </div>
                     <div className="cta-mobile">
-                        <Link to="/login" className="link color-primary">Login</Link>
+                        <Link to="/login" className="link color-primary">Sair</Link>
                     </div>
                 </div>}
             </header>
