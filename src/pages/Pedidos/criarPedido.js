@@ -17,9 +17,14 @@ import pay_icon from "../../svg/pay_icon.svg"
 
 const CriarPedido = (  ) => {
 
-    const [dataLancamento, setDataLancamento] = useState([]);
+    const formTipoPessoa = [ 'PESSOA FÍSICA', 'PESSOA JURÍDICA'];
+
+    // Variáveis - Cadastro Pedido
+
+    const [dataLancamento, setDataLancamento] = useState("");
     const [vendedorPedido, setVendedorPedido] = useState("");
     const [tipoPessoa, setTipoPessoa] = useState("");
+    const [cliente, setCliente] = useState("");
     const [numCNPJ, setNumCNPJ] = useState(0);
     const [numCPF, setNumCPF] = useState(0);
     const [indicacao, setIndicacao] = useState("SEM INDICAÇÃO");
@@ -30,17 +35,25 @@ const CriarPedido = (  ) => {
     const [vcSim, setVC] = useState(1);
     const [observacao, setObservacao] = useState(1);
     const [produto, setProduto] = useState();
-    const [quantidadeProduto, setQuantidadeProduto] = useState(0);
+    const [quantidadeProduto, setQuantidadeProduto] = useState(1);
     const [valorUnitario, setValorUnitario] = useState(0.00);
     const [valorDelivery, setValorDelivery] = useState(0.00);
     const [valorDesconto, setValorDesconto] = useState(0.00);
     const [valorTotal, setValorTotal] = useState(0.00);
     const [formaPagamento, setFormaPagamento] = useState("");
-    const [dataVencimento, setDataVencimento] = useState([]);
+    const [dataVencimento, setDataVencimento] = useState("");
+
+    // Variáveis - Listagens
+    const [getFormaPagamento, setGetFormaPagamento] = useState([]);
+
+    // Listagem - Produto
+    const [getProduto, setGetProduto] = useState([]);
+
     
     const salvarPedido = () => {
         Axios.post("http://localhost:3306/api/insert", {
             vendedorPedido: vendedorPedido,
+            cliente: cliente,
             tipoPessoa: tipoPessoa,
             numCPF: numCPF,
             numCNPJ: numCNPJ,
@@ -54,14 +67,29 @@ const CriarPedido = (  ) => {
             produto: produto,
             quantidadeProduto: quantidadeProduto,
             valorUnitario: valorUnitario,
-            valorDelivery: valorDelivery,
+            valorDelivery: valorDelivery, 
             valorDesconto: valorDesconto,
             valorTotal: valorTotal,
+            dataVencimento: dataVencimento,
             formaPagamento: formaPagamento
         }).then((response) => {
             console.log(response)
         });
     }
+
+    // Listagem de Formas de Pagamento
+    useEffect(() => { 
+        Axios.get("http://localhost:3306/financeiro/formaPagamento")
+        .then((response) => {
+            setGetFormaPagamento(response.data);
+        })
+
+        Axios.get("http://localhost:3306/estoque/produtos")
+        .then((response) => {
+            setGetProduto(response.data);
+        });
+
+    }, []);
 
     return(
         <>
@@ -84,7 +112,8 @@ const CriarPedido = (  ) => {
                             className="ml-2 text-center" 
                             id="data_lançamento_inicio" 
                             name="data_lançamento_inicio" 
-                            type="date" 
+                            type="date"
+                            value={dataLancamento}
                             onChange={(e) => {
                                 setDataLancamento(e.target.value)
                             }} 
@@ -117,6 +146,31 @@ const CriarPedido = (  ) => {
                     </div>
 
                     <div className="row flex-start-row">
+                        <div className="grid-1 flex-center">
+                            <label htmlFor="cliente_pedido"><h6>Cliente: </h6></label>
+                        </div>
+
+                        <div className="grid-3">
+                            <input 
+                            className="ml-2" 
+                            list="vendedores" 
+                            id="cliente_pedido" 
+                            name="cliente_pedido" 
+                            type="text" 
+                            placeholder="Nome Completo do Cliente" 
+                            onChange={(e) => {
+                                setCliente(e.target.value)
+                            }}
+                            required
+                            />
+
+                            <datalist id="vendedores">
+                                
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div className="row flex-start-row">
                         <div className="grid-1">
                             <label htmlFor="tipo_pessoa"><h6>Tipo de Certificado:</h6></label>
                         </div>
@@ -135,7 +189,11 @@ const CriarPedido = (  ) => {
                             required />
 
                             <datalist id="tipo_pessoa">
-                                
+                                {
+                                    formTipoPessoa?.map((dados, index) => {
+                                        return <option key={index} value={dados} />
+                                    })
+                                }
                             </datalist>
                         </div>
 
@@ -327,10 +385,16 @@ const CriarPedido = (  ) => {
                             placeholder="Produto/Serviço" 
                             onChange={(e) => {
                                 setProduto(e.target.value);
-                            }} />
+                            }} 
+                            required
+                            />
 
                             <datalist id="produtoDe_venda">
-                                
+                               {
+                                   getProduto?.map((dados, index) => {
+                                        return <option key={index} value={dados.nome_produto} />
+                                   })
+                               }
                             </datalist>
                         </div>
 
@@ -343,7 +407,9 @@ const CriarPedido = (  ) => {
                             type="number" 
                             onChange={(e) => {
                                 setQuantidadeProduto(e.target.value);
-                            }} />
+                            }} 
+                            required
+                            />
                         </div>
 
                         <div className="grid-2">
@@ -362,6 +428,7 @@ const CriarPedido = (  ) => {
                                 onChange={(e) => {
                                     setValorUnitario(e.target.value);
                                 }} 
+                                required
                             />
                         </div>
 
@@ -441,10 +508,15 @@ const CriarPedido = (  ) => {
                             onChange={(e) => {
                                 setFormaPagamento(e.target.value);
                             }}
+                            required
                             />
 
                             <datalist id="formaDe_pagamento">
-                                
+                                 {
+                                    getFormaPagamento?.map((dados, index) => {
+                                        return <option key={index} value={dados.forma_pagamento} />
+                                    })
+                                }
                             </datalist>
                         </div>
 
@@ -478,15 +550,14 @@ const CriarPedido = (  ) => {
                                 onChange={(e) => {
                                     setValorTotal(e.target.value);
                                 }}
+                                required
                             />
                         </div>
                     </div>
 
                     <div className="row flex-end-row">
                         <div className="cta-desktop ml-3" >
-                            <Link to="/faturamento/pedidos" className="btn" onClick={salvarPedido}>
-                                Salvar
-                            </Link>
+                            <Link to="/faturamento/pedidos" className="btn" onClick={salvarPedido}>Salvar</Link>
                             <Link to="/faturamento/pedidos" className="btn-cancel ml-3">Cancelar</Link>
                         </div>
                     </div>

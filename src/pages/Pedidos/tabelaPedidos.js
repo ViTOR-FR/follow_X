@@ -1,15 +1,10 @@
-// HEADERS
-import Header from "pages/Header";
+// LINKS
 import Icons from "./Icons/iconsComponent";
 
-//LINKS
-import { Link } from "react-router-dom";
+//MOMENT
+import moment from "moment";
 
-//Hooks
-import { useEffect, useState } from "react";
-import { isContentEditable } from "@testing-library/user-event/dist/utils";
-
-const TabelaPedido = ( {content} ) => {
+const TabelaPedido = ( { content } ) => {
 
     return(
         <>
@@ -19,8 +14,8 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">ID Pedido</h6>
                             {
-                                content.id.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.id_pedido}</p>
                                 })
                             }
                         </div>
@@ -28,8 +23,9 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Data de Criação</h6>
                             {
-                                content.dataCriacao.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    const dataFormatada = moment().format('DD/MM/YYYY');
+                                    return <p key={index} className="line-bottom mb-2">{dataFormatada}</p>
                                 })
                             }
                         </div>
@@ -37,8 +33,8 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Vendedor</h6>
                             {
-                                content.vendedor.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.vendedor_pedido}</p>
                                 })
                             }
                         </div>
@@ -46,8 +42,8 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Cliente</h6>
                             {
-                                content.cliente.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.cliente} ({dados.cpf})</p>
                                 })
                             }
                         </div>
@@ -55,8 +51,8 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Produto</h6>
                             {
-                                content.produto.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.produto}</p>
                                 })
                             }
                         </div>
@@ -64,35 +60,17 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Valor de Venda</h6>
                             {
-                                content.valorVenda.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">R$ {element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.vlr_total_pedido}</p>
                                 })
                             }
                         </div>
-            
+
                         <div className="text-center">
-                            <h6 className="mb-2">NFS-e</h6>
+                            <h6 className="mb-2">Forma Pagamento</h6>
                             {
-                                content.gerarNota.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
-                                })
-                            }
-                        </div>
-            
-                        <div className="text-center">
-                            <h6 className="mb-2">Situação</h6>
-                            {
-                                content.situacao.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
-                                })
-                            }
-                        </div>
-            
-                        <div className="text-center">
-                            <h6 className="mb-2">PIX</h6>
-                            {
-                                content.formaPagamento.map((element, index) => {
-                                    return <p key={index} className="line-bottom mb-2">{element}</p>
+                                content?.map((dados, index) => {
+                                    return <p key={index} className="line-bottom mb-2">{dados.forma_pagamento}</p>
                                 })
                             }
                         </div>
@@ -100,10 +78,8 @@ const TabelaPedido = ( {content} ) => {
                         <div className="text-center">
                             <h6 className="mb-2">Ações</h6>
                             {
-                                content.icons.map((element) => {
-                                    if(element) {
-                                        return <Icons />
-                                    }
+                                content?.map((dados, index) => {
+                                    return <Icons  key={index} />
                                 })
                             }
                         </div>

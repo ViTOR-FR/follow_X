@@ -30,6 +30,10 @@ const db = mysql.createPool({
 //     res.json(users)
 // })
 
+
+// ---------------------------------------------------------------------------------------- POST's ---------------------------------------------------------------------------------------------------------------- //
+
+
 // ------------------------------- CADASTRO DE USUÁRIOS ---------------------------------------------- //
 
 app.post("/registro", (req, res) => {
@@ -86,15 +90,16 @@ app.post("/login", (req, res) => {
     });
 });
 
-// [user, senha],
+// --------------------------------------------------------------------------------------------------- //
 
-// ------------------------------------------------------------------------------------ //
 
-// ---------------------------- PEDIDOS ---------------------------------------------- //
+
+// ---------------------------- CRIAÇÃO DE PEDIDOS ---------------------------------------------- //
 
 app.post("/api/insert", (req, res) => {
 
     const {vendedorPedido} = req.body;
+    const {cliente} = req.body;
     const {tipoPessoa} = req.body;
     const {numCPF} = req.body;
     const {numCNPJ} = req.body;
@@ -112,11 +117,13 @@ app.post("/api/insert", (req, res) => {
     const {valorDesconto} = req.body;
     const {valorTotal} = req.body;
     const {formaPagamento} = req.body;
+    const {dataVencimento} = req.body;
 
-    let sqlInsert = "INSERT INTO pedidos (vendedor_pedido, tipo_pessoa, cpf, cnpj, indicacao_contabilidade, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, forma_pagamento, quantidade_produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let sqlInsert = "INSERT INTO pedidos (vendedor_pedido, cliente, tipo_pessoa, cpf, cnpj, indicacao_contabilidade, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, forma_pagamento, quantidade_produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido, data_vencimento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     db.query(sqlInsert, [
         vendedorPedido,
+        cliente,
         tipoPessoa,
         numCPF,
         numCNPJ,
@@ -133,13 +140,69 @@ app.post("/api/insert", (req, res) => {
         valorUnitario,
         valorDelivery,
         valorDesconto,
-        valorTotal
+        valorTotal,
+        dataVencimento
     ], (err, result) => {
         console.log(err);  
     });
 });
 
-// ------------------------------------------------------------------------------------ //
+// ---------------------------------------------------------------------------------------- GET's ---------------------------------------------------------------------------------------------------------------- //
+
+
+
+
+// ------------------------------- GET - LISTAGEM DE PEDIDOS ---------------------------------------------- //
+
+app.get("/consulta/pedidos", (req, res) => {
+
+    db.query("SELECT * FROM pedidos", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------ //
+
+
+// ------------------------------- GET - FORMAS DE PAGAMENTO ---------------------------------------------- //
+
+app.get("/financeiro/formaPagamento", (req, res) => {
+
+    db.query("SELECT * FROM forma_pagamento", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------- //
+
+// ------------------------------------------ GET - Produtos ---------------------------------------------- //
+
+app.get("/estoque/produtos", (req, res) => {
+
+    db.query("SELECT * FROM produto", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------- //
 
 
 app.listen(port, () => {
