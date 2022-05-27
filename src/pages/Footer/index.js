@@ -8,7 +8,7 @@ const Footer = () => {
         <>
             <div className="row footer-custom">
                 <div className="grid-9">
-                    <p>2022 | Todos os direitos reservados. Desenvolvido por <a href="https://www.cwvdigital.com.br" target="_blank">CWV Digital Soluções LTDA.</a> </p>
+                    <p>2022 | Todos os direitos reservados. Desenvolvido por <a href="https://www.cwvdigital.com.br" rel="noopener">CWV Digital Soluções LTDA.</a> </p>
                 </div>
 
                 <div className="grid-3">

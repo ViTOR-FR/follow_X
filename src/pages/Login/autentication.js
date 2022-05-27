@@ -44,7 +44,7 @@ const Login = () => {
             user: user,
             senha: senha
         }).then((response) => {
-            if(response.data.mensagem == "Usuário Logado com Sucesso") {
+            if(response.data.mensagem === "Usuário Logado com Sucesso") {
                 setMenssagemRetorno(`Bem Vindo, ${user}!`);
                 setNotify("success");
                 setOpen(true);
@@ -53,7 +53,7 @@ const Login = () => {
                 window.location.reload();
             } 
 
-            if(response.data.mensagem == "Conta não encontrada") {
+            if(response.data.mensagem === "Conta não encontrada") {
                 setMenssagemRetorno("Conta não encontrada, tente novamente!");
                 setNotify("error");
                 setOpen(true);

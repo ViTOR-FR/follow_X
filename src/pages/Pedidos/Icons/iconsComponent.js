@@ -1,5 +1,3 @@
-//HEADER
-import Header from "pages/Header"
 
 //IMPORT SVG's
 import calendar_icon from "../../../svg/calendar_icon.svg";
