@@ -9,11 +9,11 @@ const Header = ( { hideMenu } ) => {
             <header className="px-2 py-1">
                 {!hideMenu && <nav>
                     <div className="logo">
-                        <Link to="/inicio"> <img src={logo} alt="followX_logo" /></Link>
+                        <Link to="/"> <img src={logo} alt="followX_logo" /></Link>
                     </div>
 
                     <ul className="menu  flex-center">
-                        <li><Link to="/inicio">Página Inicial</Link></li>
+                        <li><Link to="/">Página Inicial</Link></li>
 
                         <div className="dropdown">
                             <button className="dropbtn">Agenda</button>
