@@ -18,7 +18,7 @@ const Pedidos = () => {
         console.log("Click")
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         Axios.get("http://localhost:3306/consulta/pedidos")
         .then((response) => {
             setValues(response.data);
