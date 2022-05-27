@@ -36,7 +36,8 @@ jobs:
         run: gsutil -m rsync ./build gs://"$BUCKET"
         
       - name: Allow public access
-        run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
+        run: gsutil -m acl ch -R -u github-deploy@cohesive-envoy-348413.iam.gserviceaccount.com :O gs://"$BUCKET"
+
 
       # Set cache meta for static files
       - name: Set Cache-Control
