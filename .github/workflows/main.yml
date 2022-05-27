@@ -23,7 +23,7 @@ jobs:
         run: npm install
         
       - name: Build
-        run: yarn build
+        run: npm run build
         
       - uses: google-github-actions/setup-gcloud@v0
         with:
@@ -33,7 +33,7 @@ jobs:
           export_default_credentials: true
           
       - name: Upload Files to Bucket
-        run: gsutil -m rsync /build gs://"$BUCKET"/
+        run: gsutil -m rsync ./build gs://"$BUCKET"
         
       - name: Allow public access
         run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
