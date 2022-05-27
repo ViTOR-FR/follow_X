@@ -37,12 +37,3 @@ jobs:
         
       - name: Allow public access
         run: gsutil acl ch -u AllUsers:O gs://"$BUCKET"
-
-
-      # Set cache meta for static files
-      - name: Set Cache-Control
-        run: gsutil -m setmeta -h "Cache-Control:public, max-age=15768000" gs://"$BUCKET"/**/*.{png,svg,css,js}
-        
-      # Set cache meta for index.html
-      - name: Set Cache-Control
-        run: gsutil setmeta -h "Cache-Control:no-cache, no-store" gs://"$BUCKET"/index.html
