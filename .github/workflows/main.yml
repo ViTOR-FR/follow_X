@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     
 env:
-  BUCKET: cwvdigital.com.br
+  BUCKET: followx.com.br
     
 jobs:
   build:
