@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     
 env:
-  BUCKET: cwvdigital.com.br
+  BUCKET: followx.com.br
     
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
           node-version: 16.x
           
       - name: Install dependencies
-        run: npm install
+        run: yarn install
         
       - name: Build
         run: yarn build
@@ -33,15 +33,7 @@ jobs:
           export_default_credentials: true
           
       - name: Upload Files to Bucket
-        run: gsutil -m rsync -R ./build gs://"$BUCKET"
+        run: gsutil -m rsync ./build gs://"$BUCKET"
         
       - name: Allow public access
-        run: gsutil -m acl ch -R -u AllUsers:R gs://"$BUCKET"
-
-      # Set cache meta for static files
-      - name: Set Cache-Control
-        run: gsutil -m setmeta -h "Cache-Control:public, max-age=15768000" gs://"$BUCKET"/**/*.{png,svg,css,js}
-        
-      # Set cache meta for index.html
-      - name: Set Cache-Control
-        run: gsutil setmeta -h "Cache-Control:no-cache, no-store" gs://"$BUCKET"/index.html
+        run: gsutil acl ch -u AllUsers:O gs://"$BUCKET"
