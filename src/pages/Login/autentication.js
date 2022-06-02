@@ -18,7 +18,7 @@ import logo_login from '../../svg/followX_logo.svg'
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
+  
 
 const Login = () => {
 
@@ -40,7 +40,7 @@ const Login = () => {
       };
 
     const login = async () => {      
-        Axios.post("http://localhost:3306/login", {
+        Axios.post("https://34.121.243.219:3306/login", {
             user: user,
             senha: senha
         }).then((response) => {

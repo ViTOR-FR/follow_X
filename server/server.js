@@ -7,7 +7,6 @@ const mysql = require('mysql');
 // const saltRounds = 10;
 
 const port = 3306;
-const ip = "34.121.243.219";
 
 app.use(cors());
 app.use(bodyParser.json());
