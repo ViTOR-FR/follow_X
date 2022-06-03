@@ -25,9 +25,6 @@ jobs:
       #- name: Build
         #run: yarn build
         
-      - name: Execute Server API
-        run: yarn start ./server/server.js
-        
       - uses: google-github-actions/setup-gcloud@v0
         with:
           version: '290.0.1'
