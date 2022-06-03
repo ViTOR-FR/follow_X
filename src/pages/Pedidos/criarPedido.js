@@ -51,7 +51,7 @@ const CriarPedido = (  ) => {
 
     
     const salvarPedido = () => {
-        Axios.post("https://34.121.243.219:3306:3306/api/insert", {
+        Axios.post("http://localhost:3306/api/insert", {
             vendedorPedido: vendedorPedido,
             cliente: cliente,
             tipoPessoa: tipoPessoa,
@@ -79,12 +79,12 @@ const CriarPedido = (  ) => {
 
     // Listagem de Formas de Pagamento
     useEffect(() => { 
-        Axios.get("http://34.121.243.219:3306:3306/financeiro/formaPagamento")
+        Axios.get("http://localhost:3306/financeiro/formaPagamento")
         .then((response) => {
             setGetFormaPagamento(response.data);
         })
 
-        Axios.get("https://34.121.243.219:3306:3306/estoque/produtos")
+        Axios.get("http://localhost:3306/estoque/produtos")
         .then((response) => {
             setGetProduto(response.data);
         });

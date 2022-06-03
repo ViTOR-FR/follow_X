@@ -10,7 +10,7 @@ const port = 3306;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = mysql.createPool({
     host: '34.121.243.219',
@@ -45,7 +45,7 @@ app.post("/registro", (req, res) => {
             res.send(err);
         }
 
-        if(response.length == 0) {
+        if(response.length === 0) {
             db.query("INSERT INTO usuarios (login, senha) VALUES (?, ?)", [usuarioCadastro, senhaCadastro], (err, result) => {
                 if(err) {
                     res.send(err);
@@ -77,12 +77,11 @@ app.post("/login", (req, res) => {
         }
 
         if(result.length > 0) {
+    
             if(result) {
                 res.send({mensagem: "Usuário Logado com Sucesso"});
-            } else {
-                res.send()
             }
-
+        
         } else {
             res.send({mensagem: "Conta não encontrada"});
         }

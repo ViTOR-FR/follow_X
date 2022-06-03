@@ -19,7 +19,7 @@ const Pedidos = () => {
     }
 
     useEffect(() => {
-        Axios.get("https://34.121.243.219:3306:3306/consulta/pedidos")
+        Axios.get("http://localhost:3306/consulta/pedidos")
         .then((response) => {
             setValues(response.data);
         });

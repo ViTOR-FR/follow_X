@@ -40,7 +40,7 @@ const Login = () => {
       };
 
     const login = async () => {      
-        Axios.post("https://34.121.243.219:3306/login", {
+        Axios.post("http://localhost:3306/login", {
             user: user,
             senha: senha
         }).then((response) => {
