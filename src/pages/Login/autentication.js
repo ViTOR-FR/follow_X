@@ -9,8 +9,8 @@ import MuiAlert from '@mui/material/Alert';
 
 //HOOKS
 import { useState, forwardRef } from "react";
-import Axios from "axios";
-// import { Link } from "react-router-dom";
+// import Axios from "axios";
+import api from "services/api";
 
 //IMAGES
 import logo_login from '../../svg/followX_logo.svg'
@@ -37,12 +37,21 @@ const Login = () => {
         }
     
         setOpen(false);
-      };
+    };
 
     const login = async () => {      
-        Axios.post("http://localhost:3306/login", {
+        api.post("/login", {
             user: user,
             senha: senha
+        },
+        {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Authorization", 
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+                "Content-Type": "application/json;charset=UTF-8",
+                "x-goog-project-id": "cohesive-envoy-348413"
+            }
         }).then((response) => {
             if(response.data.mensagem === "Usuário Logado com Sucesso") {
                 setMenssagemRetorno(`Bem Vindo, ${user}!`);

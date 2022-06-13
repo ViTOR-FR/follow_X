@@ -4,6 +4,7 @@ import Footer from "pages/Footer";
 
 //API
 import Axios from "axios";
+import api from "services/api";
 
 //HOOKS
 import { useState, useEffect } from "react";
@@ -47,7 +48,7 @@ const CriarPedido = (  ) => {
     const [getFormaPagamento, setGetFormaPagamento] = useState([]);
 
     // Listagem - Produto
-    const [getProduto, setGetProduto] = useState([]);
+    // const [getProduto, setGetProduto] = useState([]);
 
     
     const salvarPedido = () => {
@@ -79,19 +80,19 @@ const CriarPedido = (  ) => {
 
     // Listagem de Formas de Pagamento
     useEffect(() => { 
-        Axios.get("http://localhost:3306/financeiro/formaPagamento")
+        api.get("financeiro/formaPagamento")
         .then((response) => {
             setGetFormaPagamento(response.data);
         })
 
-        Axios.get("http://localhost:3306/estoque/produtos")
-        .then((response) => {
-            setGetProduto(response.data);
-        });
+        // Axios.get("estoque/produtos")
+        // .then((response) => {
+        //     setGetProduto(response.data);
+        // });
 
     }, []);
 
-    return(
+    return (
         <>
         <Header />
             <section className="container">
@@ -390,11 +391,11 @@ const CriarPedido = (  ) => {
                             />
 
                             <datalist id="produtoDe_venda">
-                               {
+                               {/* {
                                    getProduto?.map((dados, index) => {
                                         return <option key={index} value={dados.nome_produto} />
                                    })
-                               }
+                               } */}
                             </datalist>
                         </div>
 

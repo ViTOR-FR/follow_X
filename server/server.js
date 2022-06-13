@@ -1,14 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const app = express();
+const cors = require('cors');
 const mysql = require('mysql');
 // const bcrypt = require('bcrypt');
 // const saltRounds = 10;
 
 const port = 3306;
 
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET','POST','DELETE','UPDATE'],
+    "x-goog-project-id": "cohesive-envoy-348413"
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -71,21 +76,26 @@ app.post("/login", (req, res) => {
     const {user} = req.body;
     const {senha} = req.body;
 
-    db.query("SELECT * FROM usuarios WHERE login = ? AND senha = ?", [user, senha], (err, result) => {
-        if(err) {
-            res.send(err);
-        }
-
-        if(result.length > 0) {
-    
-            if(result) {
-                res.send({mensagem: "Usuário Logado com Sucesso"});
+    try {
+        db.query("SELECT * FROM usuarios WHERE login = ? AND senha = ?", [user, senha], (err, result) => {
+            if(err) {
+                res.send(err);
             }
+
+            if(result.length > 0) {
         
-        } else {
-            res.send({mensagem: "Conta não encontrada"});
-        }
-    });
+                if(result) {
+                    res.send({mensagem: "Usuário Logado com Sucesso"});
+                }
+            
+            } else {
+                res.send({mensagem: "Conta não encontrada"});
+            }
+        });
+
+    } catch(err) {
+        console.log(err);
+    }
 });
 
 // --------------------------------------------------------------------------------------------------- //
@@ -206,7 +216,6 @@ app.get("/estoque/produtos", (req, res) => {
 app.listen(port, () => {
     console.log(`Running on ${port}`);
 });
-
 
 /*
 
