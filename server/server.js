@@ -24,17 +24,6 @@ const db = mysql.createPool({
     database: 'followX'
 });
 
-// const users = [
-//     {name: 'Jones', email: 'jones@gmail.com'},
-//     {name: 'Henrique', email: 'henrique@hotmail.com'}
-//   ]
-
-
-// app.get('/users', (req, res) => {
-//     res.json(users)
-// })
-
-
 // ---------------------------------------------------------------------------------------- POST's ---------------------------------------------------------------------------------------------------------------- //
 
 
@@ -216,16 +205,3 @@ app.get("/estoque/produtos", (req, res) => {
 app.listen(port, () => {
     console.log(`Running on ${port}`);
 });
-
-/*
-
-Para Encriptar a senha:
-
-bcrypt.hash(senhaCadastro, saltRounds, (err, hash) => {});
-
-
-Para verificar senha criptografada
-
-bcrypt.compare(senhaCadastro, result[0].senha, (err, result) => {});
-
-*/
