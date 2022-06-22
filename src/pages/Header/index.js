@@ -1,9 +1,42 @@
+//HOOKS
+import { useEffect, useState } from 'react';
+
+//IMAGES
 import logo from 'svg/followX_logo2.svg'
+
+//API
+import api from '../../services/api';
 
 //LINK
 import { Link } from 'react-router-dom';
 
-const Header = ( { hideMenu } ) => {
+const Header = ( { hideMenu, props} ) => {
+
+    //STATE NOME USUARIO
+    const [getUser, setGetUser] = useState([]);
+
+    const logout = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
+
+    // PEGAR NOME DO USUARIO
+    useEffect(() => {
+
+        const dataUser = async () => {
+            api.post("/usuarios", {
+                userName: localStorage.getItem('@user')
+            })
+            .then((response) => {
+                setGetUser(response.data);
+            })
+        }
+
+        dataUser()
+        .catch(console.error);
+
+    }, []);
+
     return(
         <>
             <header className="px-2 py-1">
@@ -72,17 +105,13 @@ const Header = ( { hideMenu } ) => {
 
                 {!hideMenu && <div className="flex-start-row">
                     <div className="search">
-                        <form className="flex">
-                            <input type="text" name="search" placeholder="Pesquisa..."/>
-                            <button className="btn-search">Sair</button>
-                        </form>
+                        <h6 className="gray-7">Boa tarde, {getUser?.map((data) => {
+                            return data.nome_completo
+                        })}</h6>
                     </div>
 
                     <div className="cta-desktop ml-3" >
-                        <Link to="/login" className="btn">Login</Link>
-                    </div>
-                    <div className="cta-mobile">
-                        <Link to="/login" className="link color-primary">Sair</Link>
+                        <button  className="btn" onClick={logout}><Link to="/login">Sair</Link></button>
                     </div>
                 </div>}
             </header>

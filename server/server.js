@@ -95,6 +95,7 @@ app.post("/login", (req, res) => {
 
 app.post("/api/insert", (req, res) => {
 
+    const { dataLancamento } = req.body;
     const {vendedorPedido} = req.body;
     const {cliente} = req.body;
     const {tipoPessoa} = req.body;
@@ -116,9 +117,11 @@ app.post("/api/insert", (req, res) => {
     const {formaPagamento} = req.body;
     const {dataVencimento} = req.body;
 
-    let sqlInsert = "INSERT INTO pedidos (vendedor_pedido, cliente, tipo_pessoa, cpf, cnpj, indicacao_contabilidade, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, forma_pagamento, quantidade_produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido, data_vencimento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    let sqlInsert = "INSERT INTO pedidos (data_criacao, vendedor_pedido, cliente, tipo_pessoa, cpf, cnpj, indicacao_contabilidade, vip, cd_publico, pedido_terceiro, permitir_importacao_unidade, validacao_VC, observacao, produto, forma_pagamento, quantidade_produto, vlr_unitario, vlr_delivery, vlr_desconto, vlr_total_pedido, data_vencimento) VALUES ( ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     db.query(sqlInsert, [
+
+        dataLancamento,
         vendedorPedido,
         cliente,
         tipoPessoa,
@@ -189,6 +192,27 @@ app.get("/financeiro/formaPagamento", (req, res) => {
 app.get("/estoque/produtos", (req, res) => {
 
     db.query("SELECT * FROM produto", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------- //
+
+// ------------------------------------------ GET - Usuários ---------------------------------------------- //
+
+app.post("/usuarios", (req, res) => {
+
+    const { userName } = req.body;
+
+    let getUser1 = `SELECT * FROM usuarios WHERE login = ${userName}`
+
+    db.query(getUser1, (err, result) => {
         if(err) {
             res.send(err);
         }

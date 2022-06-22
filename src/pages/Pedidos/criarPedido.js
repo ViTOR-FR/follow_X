@@ -1,14 +1,11 @@
 //HEADERS
 import Header from "pages/Header";
-import Footer from "pages/Footer";
 
 //API
-import Axios from "axios";
 import api from "services/api";
 
 //HOOKS
 import { useState, useEffect } from "react";
-import  CurrencyInput from 'react-currency-input-field';
 import { Link } from "react-router-dom";
 
 //SVG
@@ -16,18 +13,24 @@ import request_icon from "../../svg/request.svg";
 import items_icon from "../../svg/items.svg";
 import pay_icon from "../../svg/pay_icon.svg"
 
+//MASCARAS
+import maskCPF from '../Masks/mascara_cpf';
+import maskCNPJ from '../Masks/mascara_cnpj';
+import { mask, unMask } from 'remask';
+
 const CriarPedido = (  ) => {
 
+    //TIPO PADRÃO DE CERTIFICADO
     const formTipoPessoa = [ 'PESSOA FÍSICA', 'PESSOA JURÍDICA'];
 
     // Variáveis - Cadastro Pedido
 
-    const [dataLancamento, setDataLancamento] = useState("");
+    const [dataLancamento, setDataLancamento] = useState();
     const [vendedorPedido, setVendedorPedido] = useState("");
     const [tipoPessoa, setTipoPessoa] = useState("");
     const [cliente, setCliente] = useState("");
-    const [numCNPJ, setNumCNPJ] = useState(0);
-    const [numCPF, setNumCPF] = useState(0);
+    const [numCNPJ, setNumCNPJ] = useState();
+    const [numCPF, setNumCPF] = useState();
     const [indicacao, setIndicacao] = useState("SEM INDICAÇÃO");
     const [vipSim, setVip] = useState(1);
     const [condSim, setCond] = useState(1);
@@ -37,10 +40,10 @@ const CriarPedido = (  ) => {
     const [observacao, setObservacao] = useState(1);
     const [produto, setProduto] = useState();
     const [quantidadeProduto, setQuantidadeProduto] = useState(1);
-    const [valorUnitario, setValorUnitario] = useState(0.00);
-    const [valorDelivery, setValorDelivery] = useState(0.00);
-    const [valorDesconto, setValorDesconto] = useState(0.00);
-    const [valorTotal, setValorTotal] = useState(0.00);
+    const [valorUnitario, setValorUnitario] = useState();
+    const [valorDelivery, setValorDelivery] = useState();
+    const [valorDesconto, setValorDesconto] = useState();
+    const [valorTotal, setValorTotal] = useState();
     const [formaPagamento, setFormaPagamento] = useState("");
     const [dataVencimento, setDataVencimento] = useState("");
 
@@ -48,11 +51,86 @@ const CriarPedido = (  ) => {
     const [getFormaPagamento, setGetFormaPagamento] = useState([]);
 
     // Listagem - Produto
-    // const [getProduto, setGetProduto] = useState([]);
+    const [getProduto, setGetProduto] = useState([]);
 
+
+    // VALIDAÇÃO SE PF OU PJ
+    const [sePF, setSePF] = useState(false);
     
+    useEffect(() => {
+        if(tipoPessoa === "PESSOA JURÍDICA") {
+            setSePF(true);
+
+        } else {
+            setSePF(false);
+        }
+
+    }, [tipoPessoa]);
+
+
+    //PEGAR TIMESTAMP ATUAL
+    let verifyDate = true;
+    
+    useEffect(() => {
+        if(verifyDate){
+            var data = new Date(),
+            dia  = data.getDate().toString(),
+            diaF = (dia.length == 1) ? '0'+dia : dia,
+            mes  = (data.getMonth()+1).toString(),
+            mesF = (mes.length == 1) ? '0'+mes : mes,
+            anoF = data.getFullYear();
+            setDataLancamento(diaF+"/"+mesF+"/"+anoF);
+        }
+    }, []);
+
+    //MÁSCARA DE CPF E CNPJ
+    function handleCPF(event) {
+        const { value } = event.target
+    
+        setNumCPF(maskCPF(value))
+    }
+
+    function handleCNPJ(event) {
+        const { value } = event.target
+
+        setNumCNPJ(maskCNPJ(value));
+    }
+
+    //MÁSCARA DE MOEDA
+    const moedaUnitario = ev => {
+        const originalValue = unMask(ev.target.value);
+        const maskedValue = mask(originalValue, ["99,99", "999,90", "9.999,99", "999.999,99", "9.999.999,99"]) 
+        setValorUnitario(maskedValue);
+    }
+
+    const moedaDelivery = ev => {
+        const originalValue = unMask(ev.target.value);
+        const maskedValue = mask(originalValue, ["99,99", "999,90", "9.999,99", "999.999,99", "9.999.999,99"]) 
+        setValorDelivery(maskedValue);
+    }
+
+    const moedaDesconto = ev => {
+        const originalValue = unMask(ev.target.value);
+        const maskedValue = mask(originalValue, ["99,99", "999,90", "9.999,99", "999.999,99", "9.999.999,99"]) 
+        setValorDesconto(maskedValue);
+    }
+
+    const moedaValorTotal = ev => {
+        const originalValue = unMask(ev.target.value);
+        const maskedValue = mask(originalValue, ["99,99", "999,90", "9.999,99", "999.999,99", "9.999.999,99"]) 
+        setValorTotal(maskedValue);
+    }
+
+    const moedaSubTotal = ev => {
+        const originalValue = unMask(ev.target.value);
+        const maskedValue = mask(originalValue, ["99,99", "999,90", "9.999,99", "999.999,99", "9.999.999,99"]) 
+        setValorTotal(maskedValue);
+    }
+
+
     const salvarPedido = () => {
-        Axios.post("http://localhost:3306/api/insert", {
+        api.post("/api/insert", {
+            dataLancamento: dataLancamento,
             vendedorPedido: vendedorPedido,
             cliente: cliente,
             tipoPessoa: tipoPessoa,
@@ -85,12 +163,13 @@ const CriarPedido = (  ) => {
             setGetFormaPagamento(response.data);
         })
 
-        // Axios.get("estoque/produtos")
-        // .then((response) => {
-        //     setGetProduto(response.data);
-        // });
+        api.get("estoque/produtos")
+        .then((response) => {
+            setGetProduto(response.data);
+        });
 
     }, []);
+
 
     return (
         <>
@@ -105,7 +184,7 @@ const CriarPedido = (  ) => {
 
                     <div className="row">
                         <div className="grid-1">
-                            <label htmlFor="data_lançamento_inicio"><h6>Data: </h6></label>
+                            <label htmlFor="data_lançamento_inicio"><h6>Data de Criação: </h6></label>
                         </div>
 
                         <div className="grid-2">
@@ -113,10 +192,10 @@ const CriarPedido = (  ) => {
                             className="ml-2 text-center" 
                             id="data_lançamento_inicio" 
                             name="data_lançamento_inicio" 
-                            type="date"
+                            type="text"
                             value={dataLancamento}
                             onChange={(e) => {
-                                setDataLancamento(e.target.value)
+                                setDataLancamento(e.target.value.toUpperCase());
                             }} 
                             disabled />
                         </div>
@@ -129,14 +208,14 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             list="vendedores" 
                             id="vendedor_pedido" 
                             name="vendedor_pedido" 
                             type="text" 
                             placeholder="Responsável pelo Pedido" 
                             onChange={(e) => {
-                                setVendedorPedido(e.target.value)
+                                setVendedorPedido(e.target.value.toUpperCase());
                             }} 
                             />
 
@@ -153,14 +232,14 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             list="vendedores" 
                             id="cliente_pedido" 
                             name="cliente_pedido" 
                             type="text" 
                             placeholder="Nome Completo do Cliente" 
                             onChange={(e) => {
-                                setCliente(e.target.value)
+                                setCliente(e.target.value.toUpperCase());
                             }}
                             required
                             />
@@ -178,14 +257,14 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             list="tipo_pessoa" 
                             id="filter_pessoa" 
                             name="tipo_pessoa" 
                             type="text" 
                             placeholder="Física/Jurídica" 
                             onChange={(e) => {
-                                setTipoPessoa(e.target.value)
+                                setTipoPessoa(e.target.value.toUpperCase());
                             }} 
                             required />
 
@@ -204,31 +283,31 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             id="num_cpf" 
                             name="num_cpf" 
-                            type="text" 
-                            onChange={(e) => {
-                                setNumCPF(e.target.value)
-                            }} 
+                            type="text"
+                            onChange={handleCPF}
+                            value={numCPF} 
+                            maxLength="14"
                             required />
                         </div>
 
-                        <div className="grid-1 ml-5">
+                        {sePF && <div className="grid-1 ml-5">
                             <label htmlFor="pessoa_juridica"><h6>CNPJ: </h6></label>
-                        </div>
+                        </div> }
 
-                        <div className="grid-3">
+                        {sePF && <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             id="num_cnpj" 
                             name="pessoa_juridica" 
                             type="text" 
-                            onChange={(e) => {
-                                setNumCNPJ(e.target.value)
-                            }} 
+                            onChange={handleCNPJ}
+                            value={numCNPJ} 
+                            maxLength="18"
                             required />
-                        </div>
+                        </div> }
                     </div>
 
                     <div className="row flex-start-row">
@@ -238,14 +317,14 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-3">
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             list="indicacao" 
                             id="indicacao_contabilidade" 
                             name="indicacao_contabilidade" 
                             type="text" 
                             placeholder="Parceiro que Inidicou" 
                             onChange={(e) => {
-                                setIndicacao(e.target.value)
+                                setIndicacao(e.target.value.toUpperCase());
                             }} 
                             />
 
@@ -391,11 +470,11 @@ const CriarPedido = (  ) => {
                             />
 
                             <datalist id="produtoDe_venda">
-                               {/* {
+                               {
                                    getProduto?.map((dados, index) => {
                                         return <option key={index} value={dados.nome_produto} />
                                    })
-                               } */}
+                               }
                             </datalist>
                         </div>
 
@@ -406,87 +485,65 @@ const CriarPedido = (  ) => {
                             id="item_quantidade" 
                             name="item_quantidade" 
                             type="number" 
+                            value="1"
                             onChange={(e) => {
                                 setQuantidadeProduto(e.target.value);
                             }} 
                             required
+                            disabled
                             />
                         </div>
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor Unitário</h6>
-                            <CurrencyInput 
+                            <input
                                 className="ml-2 text-center"
                                 maxLength="12"
-                                prefix="R$ "
-                                decimalSeparator=","
-                                groupSeparator="."
                                 id="valor_unitario" 
                                 name="valor_unitario" 
-                                placeholder = "Valor da Und" 
-                                defaultValue = { "" } 
-                                decimalsLimit = { 2 } 
-                                onChange={(e) => {
-                                    setValorUnitario(e.target.value);
-                                }} 
+                                placeholder = "Valor Unitário"  
+                                onChange={moedaUnitario}
+                                value={valorUnitario}
                                 required
                             />
                         </div>
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor Delivery</h6>
-                            <CurrencyInput 
+                            <input
                                 className="ml-2 text-center"
                                 maxLength="12"
-                                prefix="R$ "
-                                decimalSeparator=","
-                                groupSeparator="."
                                 id="valor_delivery" 
                                 name="valor_delivery" 
-                                placeholder = "Taxa de Visita" 
-                                defaultValue = { "" } 
-                                decimalsLimit = { 2 } 
-                                onChange={(e) => {
-                                    setValorDelivery(e.target.value);
-                                }}
+                                placeholder = "Taxa de Visita"  
+                                onChange={moedaDelivery}
+                                value={valorDelivery}
                             />
                         </div>
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor Desconto</h6>
-                            <CurrencyInput 
+                            <input
                                 className="ml-2 text-center"
                                 maxLength="12"
-                                prefix="R$ "
-                                decimalSeparator=","
-                                groupSeparator="."
                                 id = "valor_desconto" 
                                 name = "valor_desconto" 
-                                placeholder = "Total a Pagar" 
-                                defaultValue = { "" } 
-                                decimalsLimit = { 2 } 
-                                onChange={(e) => {
-                                    setValorDesconto(e.target.value);
-                                }}
+                                placeholder = "Valor do Desconto"  
+                                onChange={moedaDesconto}
+                                value={valorDesconto}
                             />
                         </div>
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor Total</h6>
-                            <CurrencyInput 
+                            <input
                                 className="ml-2 text-center"
                                 maxLength="12"
-                                prefix="R$ "
-                                decimalSeparator=","
-                                groupSeparator="."
                                 id = "valor_a_pagar" 
                                 name = "valor_a_pagar" 
-                                placeholder = "Total a Pagar" 
-                                defaultValue = { "" } 
-                                decimalsLimit = { 2 } 
-                                onChange={(e) => {
-                                    setValorTotal(e.target.value);
-                                }} 
+                                placeholder = "Total a Pagar"  
+                                onChange={moedaValorTotal}
+                                value={valorTotal} 
                             />
                         </div>
                     </div>
@@ -500,14 +557,14 @@ const CriarPedido = (  ) => {
                         <div className="grid-3">
                             <h6 className="ml-2 mb-2">Forma de Pagamento</h6>
                             <input 
-                            className="ml-2" 
+                            className="ml-2 uppercase-normal" 
                             list="formaDe_pagamento" 
                             id="forma_pagamento" 
                             name="forma_pagamento" 
                             type="text" 
                             placeholder="Ex.: Dinheiro" 
                             onChange={(e) => {
-                                setFormaPagamento(e.target.value);
+                                setFormaPagamento(e.target.value.toUpperCase());
                             }}
                             required
                             />
@@ -527,7 +584,7 @@ const CriarPedido = (  ) => {
                             className="ml-2 text-center" 
                             id="data_vencimento" 
                             name="data_vencimento" 
-                            type="date" 
+                            type="date"
                             onChange={(e) => {
                                 setDataVencimento(e.target.value);
                             }}
@@ -536,21 +593,13 @@ const CriarPedido = (  ) => {
 
                         <div className="grid-2">
                             <h6 className="ml-3 mb-2">Valor</h6>
-                            <CurrencyInput 
+                            <input 
                                 className="ml-2 text-center"
-                                maxLength="12"
-                                intlConfig={{ locale: 'pt-br', currency: 'BRL' }}
-                                prefix="R$ "
-                                decimalSeparator=","
-                                groupSeparator="."
                                 id = "valor_a_pagar" 
                                 name = "valor_a_pagar" 
-                                placeholder = "Total a Pagar" 
-                                defaultValue = { "" } 
-                                decimalsLimit = { 2 } 
-                                onChange={(e) => {
-                                    setValorTotal(e.target.value);
-                                }}
+                                placeholder = "Total a Pagar"  
+                                onChange={moedaSubTotal}
+                                value={valorTotal}
                                 required
                             />
                         </div>
@@ -564,8 +613,6 @@ const CriarPedido = (  ) => {
                     </div>
                 </div>
             </section>
-
-            <Footer />
         </>
     );
 }

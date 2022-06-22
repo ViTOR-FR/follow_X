@@ -286,6 +286,10 @@ p {
   letter-spacing: 2px;
 }
 
+.uppercase-normal{
+  text-transform: uppercase;
+}
+
 .p1 {
   @include typeface-2(p1, desktop);
   @include responsive(s) {

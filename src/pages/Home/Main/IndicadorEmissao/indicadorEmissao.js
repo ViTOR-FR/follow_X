@@ -1,7 +1,7 @@
 
 
 
-const IndicadorEmissao = ( {content} ) => {
+const IndicadorEmissao = ( ) => {
     return(
         <>
             <div className="grid-3">

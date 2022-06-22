@@ -7,9 +7,9 @@ import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
+
 //HOOKS
 import { useState, forwardRef } from "react";
-// import Axios from "axios";
 import api from "services/api";
 
 //IMAGES
@@ -22,12 +22,12 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const Login = () => {
 
-    // States Snackbar
+    // States - Snackbar
     const [open, setOpen] = useState(false);
     const [notify, setNotify] = useState();
     const [menssagemRetorno, setMenssagemRetorno] = useState();
 
-    // State de Login
+    // State - Login
     const [user, setUser] = useState("");
     const [senha, setSenha] = useState("");
 
@@ -39,6 +39,21 @@ const Login = () => {
         setOpen(false);
     };
 
+    // Mostrar e não mostrar senha
+    const [mostrar, setMostrar] = useState("password");
+    const [see, setSee] = useState("btn-see-password");
+
+    const seePassword = () => {        
+        if (mostrar === "password") {
+            setMostrar("text");
+            setSee("btn-unsee-password");
+        } else {
+            setMostrar("password");
+            setSee("btn-see-password");
+        }
+    }
+
+    // Requisição de Login
     const login = async () => {      
         api.post("/login", {
             user: user,
@@ -76,46 +91,48 @@ const Login = () => {
 
             <section className="container">
                 <div className="row">
-                    <div className="grid-4 disappear"></div>
-                    <div className="grid-4">
-                        <div className="flex-center">
+                    <div className="login-screen">
+                        <div className="flex-center mt-2">
                             <img className="icon-l" src={logo_login} alt="follow_x_logo" />
                         </div>
                         <h5 className="text-center mt-2">Olá, faça o login para continuar.</h5>
-                        <>
-                            <input 
-                            className="mt-3" 
-                            type="email" 
-                            name="user" 
-                            placeholder="Digite seu usuário"
-                            onChange={(e) => {
-                                setUser(e.target.value);
-                            }}
-                            />
 
+                        <input 
+                        className="mt-3 uppercase-normal"
+                        type="email" 
+                        name="user" 
+                        placeholder="Digite seu usuário"
+                        onChange={(e) => {
+                            setUser(e.target.value);
+                        }}
+                        />
+
+                        <div className="flex-start-row">
                             <input 
                             className="mt-2" 
-                            type="password" 
+                            type={mostrar} 
                             name="user" 
-                            placeholder="Digite sua senha"
+                            placeholder="DIGITE SUA SENHA"
                             onChange={(e) => {
                                 setSenha(e.target.value);
                             }}
                             />
 
-                            <button className="btn w-100 mt-4" onClick={login}>Entrar</button>
-                            
-                            <button className="btn w-100 mt-4 mb-3">Usar Certificado Digital</button>
+                            <button className={see} onClick={seePassword} transition={{}}></button>
+                        </div>
 
-                            <Stack spacing={2} sx={{ width: '100%' }}>
-                                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-                                    <Alert onClose={handleClose} severity={notify} sx={{ width: '100%' }}>{menssagemRetorno}</Alert>
-                                </Snackbar>
-                            </Stack>
-                            
-                        </>
+
+                        <button className="btn w-100 mt-4" onClick={login}>Entrar</button>
+                        
+                        <button className="btn w-100 mt-4 mb-3">Usar Certificado Digital</button>
+
+                        <Stack spacing={2} sx={{ width: '100%' }}>
+                            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                                <Alert onClose={handleClose} severity={notify} sx={{ width: '100%' }}>{menssagemRetorno}</Alert>
+                            </Snackbar>
+                        </Stack>
                     </div>
-                    <div className="grid-4 disappear"></div>
+                    <div className="grid-4 disappear mt-6"></div>
                 </div>
             </section>
 

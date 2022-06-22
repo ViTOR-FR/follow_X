@@ -1,5 +1,5 @@
-//HOOKS
-import Axios from "axios";
+//API
+import api from "services/api";
 
 //IMPORT HEADERS
 import Header from "pages/Header";
@@ -19,14 +19,12 @@ const Pedidos = () => {
     }
 
     useEffect(() => {
-        Axios.get("http://localhost:3306/consulta/pedidos")
+        api.get("/consulta/pedidos")
         .then((response) => {
             setValues(response.data);
         });
 
     }, []);
-
-    // values?.map((dados)=> {console.log(dados)});
 
     return(
         <>

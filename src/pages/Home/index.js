@@ -29,7 +29,6 @@ const Home = () => {
                     <IndicadorProduto />
                 </div>
             </section>
-            <Footer />
         </>
     );
 }
