@@ -128,6 +128,7 @@ const CriarPedido = (  ) => {
     }
 
 
+    //SALVAR REGISTRO
     const salvarPedido = () => {
         api.post("/api/insert", {
             dataLancamento: dataLancamento,
@@ -431,14 +432,14 @@ const CriarPedido = (  ) => {
 
                     <div className="row flex-start-row">
                         <div className="grid-1">
-                            <label htmlFor="validacaoVC_sim"><h6>Observações:</h6></label>
+                            <label htmlFor="observacao_pedido"><h6>Observações:</h6></label>
                         </div>
 
                         <div className="grid-6">
                             <textarea 
                             className="ml-2" 
-                            id="story" 
-                            name="story" 
+                            id="observacao_pedido" 
+                            name="observacao_pedido" 
                             rows="5" 
                             cols="32" 
                             onChange={(e) => {

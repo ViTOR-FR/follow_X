@@ -211,8 +211,8 @@ span {
   flex-direction: row;
 
   @include responsive(s){
-    //flex-direction: column;
-    //align-items: flex-start;
+    // flex-direction: column;
+    // align-items: flex-start;
   }
 }
 

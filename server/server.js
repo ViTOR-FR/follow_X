@@ -57,8 +57,7 @@ app.post("/registro", (req, res) => {
 
 // ------------------------------------------------------------------------------------ //
 
-
-// ------------------------------- LOGIN ---------------------------------------------- //
+// ------------------------------- CREDENCIAMENTO ---------------------------------------------- //
 
 app.post("/login", (req, res) => {
 
@@ -88,6 +87,134 @@ app.post("/login", (req, res) => {
 });
 
 // --------------------------------------------------------------------------------------------------- //
+
+// ------------------------------- CADASTRO AGR ---------------------------------------------- //
+
+app.post("/credenciamento/cadastraragr", (req, res) => {
+
+    const {nomeAGR} = req.body;
+    const {cpfAGR} = req.body;
+    const {dataNascimentoAGR} = req.body;
+    const {dataInicioCredenciamento} = req.body;
+    const {emailAGR} = req.body;
+    const {nomeMaeAGR} = req.body;
+    const {rgAGR} = req.body;
+    const {orgaoEmissor} = req.body;
+    const {ufOrgaoEmissor} = req.body;
+    const {tituloEleitor} = req.body;
+    const {tituloZona} = req.body;
+    const {secaoTitulo} = req.body;
+    const {municipioVotacao} = req.body;
+    const {grauEscolaridade} = req.body;
+    const {instituicaoConclusao} = req.body;
+    const {anoConclusao} = req.body;
+    const {cepLogradouro} = req.body;
+    const {cepBairro} = req.body;
+    const {cepMunicipio} = req.body;
+    const {cepComplemento} = req.body;
+    const {cepUF} = req.body;
+    const {numEndAGR} = req.body;
+    // const {cepAGR} = req.body;
+
+    queryInsertAgr = "INSERT INTO credenciamento (nome_agr, cpf, data_nascimento, data_credenciamento, email, nome_mae, rg, orgao_expedidor, uf_rg, numero_titulo, zona_titulo, secao_titulo, municipio_titulo, grau_escolaridade, instituicao_conclusao, ano_conclusao, logradouro, numero, complemento, bairro, uf, municipio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try {
+        db.query(queryInsertAgr, [
+            nomeAGR,
+            cpfAGR,
+            dataNascimentoAGR,
+            dataInicioCredenciamento,
+            emailAGR,
+            nomeMaeAGR,
+            rgAGR,
+            orgaoEmissor,
+            ufOrgaoEmissor,
+            tituloEleitor,
+            tituloZona,
+            secaoTitulo,
+            municipioVotacao,
+            grauEscolaridade,
+            instituicaoConclusao,
+            anoConclusao,
+            cepLogradouro,
+            numEndAGR,
+            cepComplemento,
+            cepBairro,
+            cepUF,
+            cepMunicipio
+        ], (err, result) => {
+            if(result) {
+                res.send({menssage: "ok"})
+            }
+        });
+
+    } catch(err) {
+        console.log(err);
+    }
+});
+
+// --------------------------------------------------------------------------------------------------- //
+
+// ---------------------------- CADASTRO DE CONTADORES ----------------------------------------------- //
+
+app.post("/faturamento/cadastro/parceiro", (req, res) => {
+
+    const {nomeContabilidade} = req.body;
+    const { numCNPJ } = req.body;
+    const {numCPF} = req.body;
+    const {emailParceiro} = req.body;
+    const {numCPFResponsavel} = req.body;
+    const {tipoPessoaParceiro} = req.body;
+    const {tabelaEspecifica} = req.body;
+    const {permitirCriarPedido} = req.body;
+    const {segmento} = req.body;
+    const {tamanhoParceiro} = req.body;
+    const {observacaoParceiro} = req.body;
+    const {unidadeParceiro} = req.body;
+    const {cepParceiro} = req.body;
+    const {logradouroParceiro} = req.body;
+    const {numEndParceiro} = req.body;
+    const {complementoEndParceiro} = req.body;
+    const {bairroParceiro} = req.body;
+    const {ufParceiro} = req.body;
+    const {municipioParceiro} = req.body;
+    const {nomeResponsavel} = req.body;
+    const {telParceiro} = req.body;
+    const {mailParceiro} = req.body;
+    const {dataNascimentoParceiro} = req.body;
+
+    let sqlInsertPar = "INSERT INTO parceiro (unidade_vinculada, nome, tipo_pessoa, cpf, cnpj, email, tabela_especifica, permitir_criar_pedido_pelo_sistema, segmento, tamanho_parceiro, observacao, nome_responsavel, cpf_responsavel, telefone_responsavel, data_nascimento, email_responsavel, cep, logradouro, numero, complemento, bairro, uf, municipio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    db.query(sqlInsertPar, [
+        unidadeParceiro,
+        nomeContabilidade,
+        tipoPessoaParceiro,
+        numCPF,
+        numCNPJ,
+        emailParceiro,
+        tabelaEspecifica,
+        permitirCriarPedido,
+        segmento,
+        tamanhoParceiro,
+        observacaoParceiro,
+        nomeResponsavel,
+        numCPFResponsavel,
+        telParceiro,
+        dataNascimentoParceiro,
+        mailParceiro,
+        cepParceiro,
+        logradouroParceiro,
+        numEndParceiro,
+        complementoEndParceiro,
+        bairroParceiro,
+        ufParceiro,
+        municipioParceiro
+    ], (err, result) => {
+        console.log(err);  
+    });
+});
+
+// -------------------------------------------------------------------------------------------------- //
 
 
 
@@ -157,6 +284,40 @@ app.post("/api/insert", (req, res) => {
 app.get("/consulta/pedidos", (req, res) => {
 
     db.query("SELECT * FROM pedidos", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------ //
+
+// ------------------------------- GET - LISTAGEM DE AGR's ---------------------------------------------- //
+
+app.get("/consulta/credenciamentos", (req, res) => {
+
+    db.query("SELECT * FROM credenciamento", (err, result) => {
+        if(err) {
+            res.send(err);
+        }
+
+        if(result) {
+            res.send(result);
+        }
+    });
+});
+
+// ------------------------------------------------------------------------------------------------------ //
+
+// ------------------------------- GET - LISTAGEM DE PARCEIRO ------------------------------------------- //
+
+app.get("/consulta/parceiro", (req, res) => {
+
+    db.query("SELECT * FROM parceiro", (err, result) => {
         if(err) {
             res.send(err);
         }

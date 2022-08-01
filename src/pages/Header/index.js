@@ -70,6 +70,16 @@ const Header = ( { hideMenu, props} ) => {
                             <div className="dropdown-content">
                                 <Link to="/faturamento/pedidos/criarPedido">Realizar Pedido</Link>
                                 <Link to="/faturamento/pedidos">Pedidos</Link>
+                                <Link to="/faturamento/parceiro">Parceiro</Link>
+                                <Link to="/faturamento/cadastro/parceiro">Cadastro Parceiro</Link>
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <button className="dropbtn">Credenciamento</button>
+                            <div className="dropdown-content">
+                                <Link to="/credenciamento/criarCredenciamento">Realizar Credenciamento</Link>
+                                <Link to="/credenciamento/credenciamento">Meus Credenciamentos</Link>
                             </div>
                         </div>
 
